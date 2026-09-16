@@ -1,0 +1,467 @@
+{
+  "02-27 Briefing_ Self-Driving Company Architecture and Global Talent Strategy-Summary.docx": {
+    "date": "2026-02-27",
+    "pages_created": [
+      "self-driving-company.md",
+      "agent-architecture.md",
+      "domain-expert-agents.md",
+      "deals-analysis-agent.md",
+      "property-management-expert-agent.md",
+      "orchestration-agents.md",
+      "global-talent-strategy.md",
+      "integrated-systems.md",
+      "manual-operations.md",
+      "agentic-orchestration.md",
+      "box.md"
+    ]
+  },
+  "03-02 Policy Briefing_ Human-Centered AI Governance and Case-Type Discipline-Summary.docx": {
+    "date": "2026-03-02",
+    "pages_created": [
+      "human-centered-ai-governance.md",
+      "case-type-discipline.md",
+      "ai-recommendations.md",
+      "ai-in-the-loop-design.md",
+      "hr-stewardship.md",
+      "ai-literacy.md",
+      "socio-technical-alignment.md",
+      "governance-metrics.md"
+    ]
+  },
+  "03-05 Meeting_ AI Deployment Methodology, Safeguards, and Monitoring Strategy-Technology Insights and Perspectives.docx": {
+    "date": "2026-03-05",
+    "pages_created": [
+      "comment-first-ai-governance.md",
+      "incremental-ai-deployment-framework.md",
+      "ai-safeguards.md",
+      "ai-monitoring-discipline.md",
+      "manager-as-ai-product-designer.md",
+      "ai-deployment-pipeline.md",
+      "agent-architectures.md",
+      "document-workflows.md",
+      "organizational-stewardship.md",
+      "data-discipline.md",
+      "authority-separation.md",
+      "prompt-manager.md",
+      "safe-llm-sandbox.md",
+      "internet-research-agents.md",
+      "operational-memory.md"
+    ]
+  },
+  "03-06 Workshop_ Multi-Agent AI Orchestration, Pseudocode Interface, and Cost Governance-Summary.docx": {
+    "date": "2026-03-06",
+    "pages_created": [
+      "multi-agent-ai-orchestration.md",
+      "agentic-system-design.md",
+      "insight-agent.md",
+      "understanding-agent.md",
+      "search-agent.md",
+      "action-agent.md",
+      "general-coordinator-agent.md",
+      "expert-agents.md",
+      "pseudocode-interface.md",
+      "cost-governance.md",
+      "transparency.md",
+      "security-and-permissions.md",
+      "observability.md",
+      "agent-contracts.md"
+    ]
+  },
+  "04-03 Meeting_ AI Avatar Interview Agent Integration, Scoring Rubrics, and Workflow Alignment-Technology Insights and Perspectives.txt": {
+    "date": "2026-04-03",
+    "pages_created": [
+      "symbiotic-enterprise.md",
+      "integrated-ai-systems.md",
+      "ai-interview-agent.md",
+      "rubric-based-assessment.md",
+      "automated-data-pipelines.md",
+      "vectorized-semantic-search.md",
+      "relay-boxer.md",
+      "domain-specific-ai-agents.md",
+      "reusable-capabilities.md",
+      "data-integration.md",
+      "human-technology-interaction.md",
+      "microsoft-foundry.md"
+    ]
+  },
+  "04-20 Discourse_ Enterprise AI Strategy and Implementation-Summary.txt": {
+    "date": "2026-04-20",
+    "pages_created": []
+  },
+  "05-04 Tech Collaboration and Brava Systems AI Orchestration Demo-Technology Insights and Perspectives.docx": {
+    "date": "2026-05-04",
+    "pages_created": [
+      "integrated-intelligence-framework.md",
+      "sentient-enterprise.md",
+      "ai-orchestration-layer.md",
+      "agentic-ai.md",
+      "human-in-the-loop.md",
+      "data-harmonization.md",
+      "governed-ai-framework.md",
+      "centralized-ai-infrastructure.md",
+      "enterprise-transformation.md",
+      "brava-systems.md"
+    ]
+  },
+  "05-05 Workshop_Technology Insights and Perspectives.docx": {
+    "date": "2026-05-05",
+    "pages_created": []
+  },
+  "05-11 Panel Discussion Planning_ Building an AI-Capable Organization-Technology Insights and Perspectives.docx": {
+    "date": "2026-05-11",
+    "pages_created": [
+      "ai-capable-organization.md",
+      "seal-team.md",
+      "event-driven-ai.md",
+      "headless-architecture.md",
+      "llm-wikis.md",
+      "farmer-cook-restaurant-analogy.md",
+      "governance-and-containment.md",
+      "shared-kitchen.md",
+      "clone-and-tune-model.md",
+      "core-builders.md",
+      "event-triggered-agents.md",
+      "coding-agents.md"
+    ]
+  },
+  "05-12 Advisory Council Meeting_ Bravas Systems - Product Feedback and AI Strategy-Technology Insights and Perspectives.md": {
+    "date": "2026-05-12",
+    "pages_created": [
+      "enterprise-ai-integration.md",
+      "ai-strategy.md",
+      "advisory-council.md",
+      "agentic-systems.md",
+      "headless-architecture.md",
+      "master-control-program-mcp-servers.md",
+      "ai-solutions-layer.md",
+      "data-embeddings.md",
+      "enterprise-transformation.md"
+    ]
+  },
+  "05-12 Commercial Real Estate Operations-Technology Insights and Perspectives.docx": {
+    "date": "2026-05-12",
+    "pages_created": [
+      "applied-intelligence-architecture.md",
+      "enterprise-ai-integration.md",
+      "orchestration-layer.md",
+      "agentic-framework.md",
+      "ai-agents.md",
+      "brava-systems.md",
+      "stemmons-enterprise.md",
+      "boxer-property.md",
+      "yardi.md",
+      "data-mastery.md",
+      "automation-imperative.md",
+      "human-in-the-loop.md"
+    ]
+  },
+  "05-13 Meeting_ AI Adoption Pace, Governance, and Rollout Strategy-Technology Insights and Perspectives.docx": {
+    "date": "2026-05-13",
+    "pages_created": [
+      "architectural-approach-to-enterprise-ai.md",
+      "use-case-fallacy.md",
+      "citizen-led-ai-development.md",
+      "ai-capabilities.md",
+      "ai-governance.md",
+      "automated-ai-triggers.md",
+      "enterprise-ai-rollout.md",
+      "openclaw.md"
+    ]
+  },
+  "2026-05-05 Customer Conversation 12_59_55-Technology Insights and Perspectives.docx": {
+    "date": "2026-05-05",
+    "pages_created": []
+  },
+  "A Data-First Approach to Enterprise Transformation and Integrated AI 2026-02-025.docx": {
+    "date": "2026-02-02",
+    "pages_created": [
+      "ai-orchestration.md",
+      "enterprise-transformation.md",
+      "boxer.md",
+      "data-first-strategy.md",
+      "configurable-application-platform.md",
+      "agent-ecosystem.md",
+      "ai-solution-repository.md",
+      "trigger-taxonomy.md",
+      "governance-and-security.md",
+      "point-solutions.md",
+      "headless-interface.md",
+      "model-agnostic-ai.md",
+      "event-driven-automation.md",
+      "rapid-solution-assembly.md",
+      "ontology.md"
+    ]
+  },
+  "A New Architecture for the Intelligent Enterprise 2026-02-25.docx": {
+    "date": "2026-02-25",
+    "pages_created": [
+      "brava-systems.md",
+      "intelligent-enterprise-architecture.md",
+      "justin-siegel.md",
+      "darlene.md",
+      "william.md",
+      "boxer-property.md",
+      "data-layer.md",
+      "low-code-no-code-platform.md",
+      "ai-orchestration-layer.md",
+      "agentic-ecosystem.md",
+      "understanding-agent.md",
+      "system-of-logic.md",
+      "governance-and-cost-management.md",
+      "future-direction-of-enterprise-technology.md"
+    ]
+  },
+  "AI Conversation about Transformation and Job Descriptions 2025-10-13.docx": {
+    "date": "2025-10-13",
+    "pages_created": [
+      "ai-experience.md",
+      "pattern-recognition.md",
+      "knowledge-recall.md",
+      "ai-hiring.md",
+      "boxer.md",
+      "job-descriptions.md",
+      "cas-jobs.md",
+      "standards.md",
+      "quest-forms.md",
+      "scheduled-tasks.md",
+      "event-driven-tasks.md",
+      "infill-tasks.md",
+      "ai-solution-architecture.md",
+      "azure-document-intelligence.md",
+      "ai-vision.md",
+      "justin-segal.md",
+      "jeremy-dobbins.md",
+      "mike-layton.md",
+      "transformation.md"
+    ]
+  },
+  "AI Strategy for Department Heads 2026-03-25.docx": {
+    "date": "2026-03-25",
+    "pages_created": [
+      "ai-strategy.md",
+      "boxer.md",
+      "ai-roadmap.md",
+      "ai-interventions.md",
+      "global-talent.md",
+      "foundry.md",
+      "cast.md",
+      "insight-navigator.md",
+      "understanding-agent.md",
+      "action-agent.md",
+      "fleet-manager.md",
+      "ai-solutions-inventory.md",
+      "enterprise-architecture.md",
+      "agentic-systems.md",
+      "llms.md"
+    ]
+  },
+  "AI Training and Concepts Overview 2025-09-11.docx": {
+    "date": "2025-09-11",
+    "pages_created": [
+      "ai-training-framework.md",
+      "initiating-action.md",
+      "event-driven-activation.md",
+      "schedule-driven-activation.md",
+      "user-driven-activation.md",
+      "data-access.md",
+      "user-provided-data.md",
+      "user-context-data.md",
+      "data-in-solution.md",
+      "ai-model.md",
+      "basic-llm-access.md",
+      "stand-alone-agent.md",
+      "multiple-agents.md",
+      "results-handling.md",
+      "ai-orchestration.md",
+      "brava-systems.md",
+      "microsoft-azure.md"
+    ]
+  },
+  "Article - Implementing AI for Operational Efficiency.docx": {
+    "date": "Unknown",
+    "pages_created": [
+      "ai-for-operational-efficiency.md",
+      "boxer-property.md",
+      "justin-segal.md",
+      "brava-systems.md",
+      "yardi.md",
+      "azure-ai-foundry.md",
+      "ai-modular-framework.md",
+      "ai-integration.md",
+      "predictive-maintenance.md",
+      "data-quality-and-security.md",
+      "text-to-api.md",
+      "text-to-u.md",
+      "yardi-virtuoso.md",
+      "commercial-real-estate.md",
+      "human-intelligence-hi.md",
+      "model-context-protocol.md",
+      "semantic-kernel.md",
+      "microsoft-azure.md"
+    ]
+  },
+  "Boxer AI Show and Tell.docx": {
+    "date": "Unknown",
+    "pages_created": [
+      "boxer.md",
+      "justin-segal.md",
+      "ai-in-real-estate.md",
+      "boxer-ai-philosophy.md",
+      "agentic-ai.md",
+      "ai-anxiety.md",
+      "ai-adoption-roadmap.md",
+      "large-language-model.md"
+    ]
+  },
+  "Brava List of AI Solutions 2025-11-14.txt": {
+    "date": "2025-11-14",
+    "pages_created": [
+      "brava-ai-solutions.md",
+      "ai-applications.md",
+      "document-processing.md",
+      "marketing-content-generation.md",
+      "construction-operations.md",
+      "recruiting-and-onboarding.md",
+      "human-resources.md",
+      "legal-case-ai.md",
+      "leads-and-leasing-operations.md",
+      "customer-request-ai.md",
+      "helpdesk-ai-features.md",
+      "learning-and-development.md",
+      "invoices.md",
+      "loans.md",
+      "miscellaneous-ai-features.md"
+    ]
+  },
+  "Brava Strategic Plan for AI Template 2025-08-05.md": {
+    "date": "2025-08-05",
+    "pages_created": [
+      "brava-systems.md",
+      "strategic-ai-planning.md",
+      "ai-agents.md",
+      "enterprise-transformation.md",
+      "mission-statement.md",
+      "high-level-goal.md",
+      "mid-level-goal.md",
+      "task.md",
+      "central-ai-connector.md",
+      "prompt-store.md",
+      "ai-triggers.md",
+      "agentic-flows.md",
+      "orchestration-layer.md"
+    ]
+  },
+  "Comments about AI and Technology Adoption 2026-04-16.txt": {
+    "date": "2026-04-16",
+    "pages_created": [
+      "technology-adoption-fears.md",
+      "ai-hype.md",
+      "technological-foundation.md",
+      "principled-innovation.md",
+      "artificial-general-intelligence.md",
+      "leadership-alignment.md",
+      "creativity-and-control.md",
+      "data-pipelines.md"
+    ]
+  },
+  "Integrating Artificial Intelligence into Our Company Presentation Transcript 2025-08-04.docx": {
+    "date": "2025-08-04",
+    "pages_created": [
+      "artificial-intelligence-integration.md",
+      "unified-data-and-systems.md",
+      "enterprise-ai-platform.md",
+      "prompt-store.md",
+      "ai-agents.md",
+      "multi-agent-workflows.md",
+      "data-security.md",
+      "transparency-and-control.md",
+      "ai-adoption.md",
+      "safe-experimentation.md",
+      "brava-systems.md",
+      "relay.md",
+      "integrated-global-team.md",
+      "microsoft-azure.md",
+      "aws.md",
+      "gemini.md",
+      "yardi.md"
+    ]
+  },
+  "Overview - Getting Started with Brava AI Systems.docx": {
+    "date": "Unknown",
+    "pages_created": [
+      "brava-systems.md",
+      "brava-implementation-team.md",
+      "platform-as-a-service-providers.md",
+      "microsoft-azure-ai-foundry.md",
+      "ai-integration.md",
+      "incremental-deployment.md",
+      "ai-use-cases.md",
+      "data-management-roles.md",
+      "ai-roadmap.md"
+    ]
+  },
+  "Overview of Brava General Concepts.docx": {
+    "date": "Unknown",
+    "pages_created": [
+      "brava-systems.md",
+      "stemis-enterprise.md",
+      "central-ai-connector.md",
+      "prompt-store.md",
+      "ai-integration.md",
+      "enterprise-transformation.md",
+      "large-language-models.md",
+      "ai-agents.md",
+      "automation.md",
+      "boxer-property.md",
+      "data-normalization.md",
+      "operations-platform.md"
+    ]
+  },
+  "Podcast about Data Global Teams and Brava Systems AI to Transform Boxer.docx": {
+    "date": "Unknown",
+    "pages_created": [
+      "boxer-property.md",
+      "brava-systems.md",
+      "incremental-ai-rollout.md",
+      "global-support-model.md",
+      "data-infrastructure.md",
+      "ai-agents.md",
+      "employee-fulfillment.md",
+      "healthy-risk-taking.md",
+      "innovation-platform.md",
+      "remote-knowledge-work.md",
+      "strategic-diversification.md",
+      "data-readiness.md",
+      "justin-segal.md"
+    ]
+  },
+  "Presentation on Going from AI Strategy to Implemented Enterprise AI .docx": {
+    "date": "Unknown",
+    "pages_created": [
+      "ai-strategy.md",
+      "enterprise-transformation.md",
+      "brava-systems.md",
+      "collaboration-quotient.md",
+      "principled-incrementalism.md",
+      "flexible-ai-tools.md",
+      "orchestration-platform.md",
+      "ai-implementation-roadmap.md",
+      "aptitude-based-hiring.md",
+      "relay.md",
+      "global-teams.md",
+      "supply-chain-metaphor-for-ai.md"
+    ]
+  },
+  "Symbiotic Enterprise and AI Integration 2026-03-25.docx": {
+    "date": "2026-03-25",
+    "pages_created": []
+  },
+  "Various Content Blocks for AI and FutureSense 2026-02-25.docx": {
+    "date": "2026-02-25",
+    "pages_created": []
+  },
+  "Various Content Blocks for AI and FutureSense 2026-02-25.txt": {
+    "date": "2026-02-25",
+    "pages_created": []
+  }
+}
