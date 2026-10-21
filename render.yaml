@@ -1,0 +1,23 @@
+﻿services:
+  - type: web
+    name: llm-wiki
+    runtime: python
+    branch: main
+    region: virginia
+
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 2 --threads 4 --timeout 120 --bind 0.0.0.0:$PORT
+
+    # Environment variables -- values are set in the Render dashboard, NOT here.
+    # Never put actual secrets in this file.
+    envVars:
+      - key: AZURE_OPENAI_API_KEY
+        sync: false
+      - key: AZURE_OPENAI_ENDPOINT
+        sync: false
+      - key: AZURE_OPENAI_DEPLOYMENT
+        value: gpt-5-mini-2
+      - key: AZURE_OPENAI_API_VERSION
+        value: 2025-01-01-preview
+      - key: PYTHON_VERSION
+        value: "3.11"

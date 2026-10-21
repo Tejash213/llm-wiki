@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karpathy Wiki — LLM Knowledge Wiki & Ingestion Pipeline</title>
+  <meta name="description" content="AI-Powered Knowledge Wiki Generator and Query Interface with Azure OpenAI and SkillOpt self-evolving agent skills.">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- Ambient background glow elements -->
+  <div class="glow-orb orb-1" aria-hidden="true"></div>
+  <div class="glow-orb orb-2" aria-hidden="true"></div>
+
+  <!-- Main Container -->
+  <div class="app-layout">
+    
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+            <path d="M6 6h10"/>
+            <path d="M6 10h10"/>
+            <path d="m9 16 2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Karpathy Wiki <span class="badge-version">v2.0</span></h1>
+          <p class="brand-subtitle">Autonomous Knowledge Graph & LLM Synthesis</p>
+        </div>
+      </div>
+
+      <!-- Live Backend & Stats Ribbon -->
+      <div class="header-status-ribbon">
+        <div class="status-pill model-pill" id="modelStatusPill" title="Connected Azure OpenAI Model">
+          <span class="status-dot pulsing"></span>
+          <span class="pill-label">Model:</span>
+          <span class="pill-val" id="modelName">gpt-5-mini-2</span>
+        </div>
+        <div class="status-pill" title="Total Generated Wiki Markdown Pages">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          <span class="pill-val" id="totalPagesCount">265</span>
+          <span class="pill-label">Pages</span>
+        </div>
+        <div class="status-pill" title="Ingested Enterprise Documents">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span class="pill-val" id="totalDocsCount">31</span>
+          <span class="pill-label">Sources</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="app-nav" aria-label="Main Navigation">
+      <button class="nav-tab active" id="tabBtnQuery" data-tab="tabQuery">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        Ask & Explore (Q&amp;A)
+      </button>
+      <button class="nav-tab" id="tabBtnIngest" data-tab="tabIngest">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Document Ingestion
+        <span class="tab-indicator" id="ingestActiveIndicator" style="display:none;"></span>
+      </button>
+      <button class="nav-tab" id="tabBtnWiki" data-tab="tabWiki">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
+        Wiki Knowledge Explorer
+      </button>
+      <button class="nav-tab" id="tabBtnSkillopt" data-tab="tabSkillopt">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        SkillOpt Diagnostics
+      </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+
+      <!-- ======================================================== -->
+      <!-- TAB 1: NATURAL LANGUAGE QUERY & KNOWLEDGE SYNTHESIS     -->
+      <!-- ======================================================== -->
+      <section class="tab-panel active" id="tabQuery">
+        <div class="query-layout">
+          
+          <!-- Query Controls & Input -->
+          <div class="query-hero-card glass-panel">
+            <div class="query-mode-switch">
+              <span class="mode-label">Mode:</span>
+              <label class="mode-radio">
+                <input type="radio" name="queryMode" value="ai" checked id="modeAiRadio">
+                <span class="radio-custom"></span>
+                <span>Azure AI Synthesis (gpt-5-mini-2)</span>
+              </label>
+              <label class="mode-radio">
+                <input type="radio" name="queryMode" value="search" id="modeSearchRadio">
+                <span class="radio-custom"></span>
+                <span>Fast Keyword Retrieval</span>
+              </label>
+            </div>
+
+            <!-- Input Box -->
+            <div class="query-input-container">
+              <textarea 
+                id="queryInput" 
+                rows="2" 
+                placeholder="Ask anything about Brava Systems, Enterprise AI, Advisory Council, or Architecture..."
+                aria-label="Enter question for knowledge wiki"></textarea>
+              <button id="sendQueryBtn" class="btn-primary" title="Send question (Enter or Ctrl+Enter)">
+                <span class="btn-text">Synthesize</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+
+            <!-- Suggested Question Pills -->
+            <div class="suggested-queries">
+              <span class="suggest-caption">Suggested questions:</span>
+              <button class="chip-query" data-q="What is Brava Systems and what is its core AI strategy?">Brava Systems &amp; Strategy</button>
+              <button class="chip-query" data-q="Explain the AI Adoption Roadmap and commercial viability milestones.">AI Adoption Roadmap</button>
+              <button class="chip-query" data-q="Who is on the Advisory Council and what are their primary contributions?">Advisory Council</button>
+              <button class="chip-query" data-q="What is the Human-Centered AI Governance and Case-Type Discipline?">AI Governance Policy</button>
+            </div>
+          </div>
+
+          <!-- Query Results / Conversation Flow -->
+          <div class="query-results-area" id="queryResultsArea">
+            <div class="welcome-placeholder" id="welcomePlaceholder">
+              <div class="placeholder-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+              <h3>Explore 265+ Interlinked Knowledge Pages</h3>
+              <p>Type your question above or choose a suggested topic. The Azure reasoning engine retrieves relevant concepts, traverses [[wikilinks]], and generates fully-cited answers.</p>
+            </div>
+
+            <!-- Dynamic Answer Cards will be injected here -->
+            <div id="answersStream" class="answers-stream"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 2: DRAG & DROP DOCUMENT INGESTION PIPELINE           -->
+      <!-- ======================================================== -->
+      <section class="tab-panel" id="tabIngest">
+        <div class="ingest-layout">
+          
+          <!-- Left Column: Dropzone & File Queue -->
+          <div class="ingest-controls-col">
+            <div class="glass-panel dropzone-card">
+              <div class="card-header">
+                <h2>Document Ingestion Dropzone</h2>
+                <span class="badge-accent">Stage 1 - 5 Pipeline</span>
+              </div>
+              <p class="section-desc">Drop enterprise files (.docx, .pdf, .txt, .md). The multi-stage pipeline extracts concepts, identifies relevant existing pages via Azure LLM, performs intelligent non-destructive merges, creates new wiki pages, and enriches bidirectional [[wikilinks]].</p>
+
+              <!-- Drag and Drop Box -->
+              <div class="drop-zone" id="documentDropZone">
+                <input type="file" id="filePickerInput" multiple accept=".docx,.pdf,.txt,.md" style="display:none;">
+                <div class="drop-zone-content">
+                  <div class="drop-icon-anim">
+                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <p class="drop-zone-prompt"><strong>Drag &amp; drop document files here</strong> or <span class="browse-link">browse your computer</span></p>
+                  <p class="drop-zone-formats">Supported: Microsoft Word (.docx), PDF (.pdf), Plain Text (.txt), Markdown (.md)</p>
+                </div>
+              </div>
+
+              <!-- Ingestion Options -->
+              <div class="ingest-options-row">
+                <label class="checkbox-label" title="Re-process document even if recorded in _processed.json">
+                  <input type="checkbox" id="forceReprocessCheckbox">
+                  <span class="custom-checkbox"></span>
+                  <span>Force re-processing if already indexed</span>
+                </label>
+              </div>
+
+              <!-- Selected Files Queue -->
+              <div class="selected-files-section" id="selectedFilesSection" style="display:none;">
+                <div class="files-queue-header">
+                  <h3>Selected Documents (<span id="queueCount">0</span>)</h3>
+                  <button class="btn-subtle btn-sm" id="clearQueueBtn">Clear All</button>
+                </div>
+                <div class="files-queue-list" id="filesQueueList"></div>
+
+                <!-- Submit Button -->
+                <button class="btn-primary btn-block" id="startIngestionBtn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  <span>Start Autonomous Ingestion Pipeline</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Live Pipeline Monitor & Stage Tracker -->
+          <div class="ingest-monitor-col">
+            <div class="glass-panel monitor-card">
+              <div class="card-header">
+                <h2>Pipeline Execution Monitor</h2>
+                <div class="monitor-actions">
+                  <span class="status-indicator-badge badge-idle" id="pipelineStatusBadge">Idle</span>
+                  <button class="btn-subtle btn-sm" id="clearLogsBtn" title="Clear console output">Clear Logs</button>
+                </div>
+              </div>
+
+              <!-- Visual Stage Tracker -->
+              <div class="pipeline-stages-tracker" id="stagesTracker">
+                <div class="stage-step" id="stageStep1" data-step="1">
+                  <div class="step-circle">1</div>
+                  <div class="step-label">File Ingest</div>
+                </div>
+                <div class="stage-connector"></div>
+                <div class="stage-step" id="stageStep2" data-step="2">
+                  <div class="step-circle">2</div>
+                  <div class="step-label">Relevance AI</div>
+                </div>
+                <div class="stage-connector"></div>
+                <div class="stage-step" id="stageStep3" data-step="3">
+                  <div class="step-circle">3</div>
+                  <div class="step-label">Merge &amp; Create</div>
+                </div>
+                <div class="stage-connector"></div>
+                <div class="stage-step" id="stageStep4" data-step="4">
+                  <div class="step-circle">4</div>
+                  <div class="step-label">Cross-linking</div>
+                </div>
+              </div>
+
+              <!-- Live Progress Bar -->
+              <div class="progress-bar-wrapper">
+                <div class="progress-bar-fill" id="pipelineProgressFill" style="width: 0%;"></div>
+              </div>
+
+              <!-- Terminal Console Output -->
+              <div class="terminal-console-container">
+                <div class="terminal-header">
+                  <div class="terminal-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                  </div>
+                  <span class="terminal-title">pipeline.log</span>
+                  <span class="terminal-active-file" id="terminalActiveFile">Ready</span>
+                </div>
+                <div class="terminal-body" id="terminalLogsBody">
+                  <div class="log-entry log-dim">[System ready. Drop files to begin automated ingestion.]</div>
+                </div>
+              </div>
+
+              <!-- Completion Summary Banner -->
+              <div class="ingest-summary-banner" id="ingestSummaryBanner" style="display:none;">
+                <div class="summary-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div class="summary-details">
+                  <h4>Batch Ingestion Complete!</h4>
+                  <p id="summaryText">Updated: 0 pages | Created: 0 pages</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 3: WIKI KNOWLEDGE EXPLORER                           -->
+      <!-- ======================================================== -->
+      <section class="tab-panel" id="tabWiki">
+        <div class="wiki-explorer-layout">
+          
+          <!-- Left: Page Filter & List -->
+          <div class="wiki-sidebar glass-panel">
+            <div class="wiki-search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="wikiSearchInput" placeholder="Filter 265+ pages..." aria-label="Filter wiki pages">
+            </div>
+
+            <!-- Type Filter Pills -->
+            <div class="wiki-type-filters">
+              <button class="filter-chip active" data-type="all">All (<span id="typeCountAll">0</span>)</button>
+              <button class="filter-chip" data-type="entity">Entities (<span id="typeCountEntity">0</span>)</button>
+              <button class="filter-chip" data-type="concept">Concepts (<span id="typeCountConcept">0</span>)</button>
+              <button class="filter-chip" data-type="theme">Themes (<span id="typeCountTheme">0</span>)</button>
+            </div>
+
+            <!-- Page Cards List -->
+            <div class="wiki-pages-list" id="wikiPagesList">
+              <div class="loading-spinner-box">Loading wiki knowledge base...</div>
+            </div>
+          </div>
+
+          <!-- Right: Page Reader Viewer -->
+          <div class="wiki-reader glass-panel" id="wikiReaderPanel">
+            <div class="reader-empty" id="readerEmptyState">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              <h3>Select a page from the list</h3>
+              <p>Or click on any [[wikilink]] in answers or pages to inspect interconnected knowledge.</p>
+            </div>
+
+            <div class="reader-content-wrapper" id="readerContentWrapper" style="display:none;">
+              <div class="reader-header">
+                <div>
+                  <h2 id="readerTitle" class="reader-page-title">Page Title</h2>
+                  <div class="reader-meta-row" id="readerMetaRow"></div>
+                </div>
+                <div class="reader-actions">
+                  <button class="btn-subtle btn-sm" id="copyMarkdownBtn">Copy Markdown</button>
+                </div>
+              </div>
+
+              <!-- Inbound/Outbound Knowledge Graph Summary -->
+              <div class="reader-graph-bar">
+                <div class="graph-stat">
+                  <span class="stat-num" id="readerOutboundCount">0</span>
+                  <span class="stat-lbl">Outbound [[Links]]</span>
+                </div>
+                <div class="graph-stat">
+                  <span class="stat-num" id="readerInboundCount">0</span>
+                  <span class="stat-lbl">Inbound Backlinks</span>
+                </div>
+              </div>
+
+              <!-- Rendered Markdown Body -->
+              <div class="reader-markdown-body" id="readerMarkdownBody"></div>
+
+              <!-- Backlinks Section -->
+              <div class="reader-backlinks-section" id="readerBacklinksSection">
+                <h4>Backlinks (Pages that link here)</h4>
+                <div class="backlinks-chips-list" id="readerBacklinksList"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 4: SKILLOPT DIAGNOSTICS & SYSTEM STATUS             -->
+      <!-- ======================================================== -->
+      <section class="tab-panel" id="tabSkillopt">
+        <div class="skillopt-layout">
+          
+          <div class="glass-panel skillopt-overview-card">
+            <h2>SkillOpt: Executive Strategy for Self-Evolving Agent Skills</h2>
+            <p class="section-desc">SkillOpt (arXiv:2605.23904) treats the system-prompt skill document as a trainable external state instead of fine-tuning model weights. Cosine-annealed edit budgets with ADD/DELETE/REPLACE operations are validated against a held-out split with strict gating.</p>
+
+            <div class="skillopt-stats-grid">
+              <div class="diag-stat-card">
+                <span class="diag-label">Active Model Backend</span>
+                <span class="diag-val" id="diagModel">Azure OpenAI (gpt-5-mini-2)</span>
+              </div>
+              <div class="diag-stat-card">
+                <span class="diag-label">Seed Skill Path</span>
+                <span class="diag-val" id="diagSkillPath">wiki/Best Wiki Skill.md</span>
+              </div>
+              <div class="diag-stat-card">
+                <span class="diag-label">Optimization Protocol</span>
+                <span class="diag-val">Text-Space Bounded Edits (SkillOpt)</span>
+              </div>
+              <div class="diag-stat-card">
+                <span class="diag-label">Knowledge Graph Topology</span>
+                <span class="diag-val">Obsidian [[wikilinks]] Network</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="skillopt-columns">
+            <!-- Active Skill Viewer -->
+            <div class="glass-panel skill-viewer-card">
+              <div class="card-header">
+                <h3>Active Learned Skill Prompt</h3>
+                <span class="badge-accent">System Prompt</span>
+              </div>
+              <pre class="skill-code-block" id="skillPromptPreview">Loading Best Wiki Skill.md...</pre>
+            </div>
+
+            <!-- History Logs -->
+            <div class="glass-panel skill-logs-card">
+              <div class="card-header">
+                <h3>SkillOpt Training History &amp; Validations</h3>
+                <span class="badge-subtle" id="skillOptLogCount">0 runs</span>
+              </div>
+              <div class="skillopt-log-entries" id="skillOptLogsContainer">
+                <div class="log-dim">No historical optimization logs found yet. Run <code>python main.py --skillopt</code> to train.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Modal for instant Wikilink preview from Q&A -->
+  <div class="modal-backdrop" id="wikilinkModalBackdrop" style="display:none;">
+    <div class="modal-card glass-panel">
+      <div class="modal-header">
+        <h3 id="modalPageTitle">Wiki Page</h3>
+        <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body reader-markdown-body" id="modalPageContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
