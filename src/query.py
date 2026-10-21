@@ -150,6 +150,83 @@ def search_mode(query: str, pages: dict[str, str]):
     print("  Tip: For an AI-synthesised answer, run without the --search flag.\n")
 
 
+# ── Off-topic classifier ─────────────────────────────────────────────────────
+
+# Threshold below which the query is considered potentially off-topic.
+# Score is number of keyword hits across all wiki pages combined.
+_RELEVANCE_THRESHOLD = 2
+
+OFF_TOPIC_RESPONSE = (
+    "Sorry, I cannot help you with that. "
+    "My knowledge is limited to the topics covered in this organisation's wiki. "
+    "Please ask a question related to our stored knowledge base."
+)
+
+CLASSIFIER_SYSTEM = """You are a query classifier for an internal knowledge base.
+Decide whether the user's question is ON-TOPIC or OFF-TOPIC for the knowledge base.
+
+The knowledge base covers topics such as:
+{topics}
+
+Reply with exactly one word: RELEVANT or IRRELEVANT.
+Do NOT explain your reasoning."""
+
+
+def _build_topic_summary(pages: dict[str, str]) -> str:
+    """Build a short comma-separated list of wiki page titles for the classifier prompt."""
+    titles = sorted(fname.replace(".md", "").replace("-", " ") for fname in pages)
+    # Use up to 60 titles so the prompt stays small
+    sample = titles[:60]
+    return ", ".join(sample)
+
+
+def is_off_topic(query: str, pages: dict[str, str]) -> bool:
+    """
+    Two-stage off-topic classifier.
+
+    Stage 1 (fast, free): keyword overlap across the entire wiki corpus.
+      - Total keyword hits == 0  → definitely off-topic, no LLM needed.
+      - Total keyword hits >= threshold → on-topic, no LLM needed.
+
+    Stage 2 (cheap LLM call): used only for the ambiguous middle band.
+      - Sends a tiny classification prompt and expects "RELEVANT" / "IRRELEVANT".
+    """
+    if not pages:
+        return False  # no pages → can't judge, let it through
+
+    keywords = tokenise(query)
+    if not keywords:
+        return False  # single stop-word questions → let through
+
+    # Stage 1: count total keyword hits across all pages
+    total_hits = 0
+    for content in pages.values():
+        body_lower = content.lower()
+        total_hits += sum(
+            1 for kw in keywords
+            if re.search(r'\b' + re.escape(kw) + r'\b', body_lower)
+        )
+        if total_hits >= _RELEVANCE_THRESHOLD:
+            return False  # clearly on-topic
+
+    if total_hits == 0:
+        return True  # clearly off-topic, skip LLM
+
+    # Stage 2: ambiguous — ask LLM
+    try:
+        from src.llm_client import call_llm_query
+        topics = _build_topic_summary(pages)
+        system = CLASSIFIER_SYSTEM.format(topics=topics)
+        verdict = call_llm_query(
+            system,
+            f"User question: {query}",
+            max_tokens=5,
+        ).strip().upper()
+        return verdict.startswith("IRRELEVANT")
+    except Exception:
+        return False  # on error, be permissive
+
+
 # ── AI query mode ─────────────────────────────────────────────────────────────
 
 QUERY_SYSTEM = """You are a knowledgeable assistant for an organization's internal knowledge wiki.
@@ -163,8 +240,7 @@ Your job:
    were not provided, list them at the end under "FOLLOW_LINKS:" (one per line).
 5. If the answer cannot be found in the provided pages, say so clearly.
 
-Format your response in clear Markdown with headers where appropriate.
-"""
+Format your response in clear Markdown with headers where appropriate."""
 
 
 def extract_follow_links(answer: str) -> tuple[str, list[str]]:
@@ -250,6 +326,21 @@ def run_query(query: str, mode: str = "ai") -> dict:
     mode can be 'ai' (Azure LLM synthesis) or 'search' (keyword matching).
     """
     pages = load_wiki_pages()
+
+    # ── Off-topic guard ───────────────────────────────────────────────────────
+    # Run classifier before any scoring or LLM call.
+    # Search mode is exempt — users explicitly browse, so we allow any keyword.
+    if mode == "ai" and is_off_topic(query, pages):
+        return {
+            "query": query,
+            "mode": "ai",
+            "answer": OFF_TOPIC_RESPONSE,
+            "follow_links": [],
+            "retrieved": [],
+            "total_matches": 0,
+            "off_topic": True,
+        }
+
     scored = score_pages(query, pages)
     top_results = []
     for fname, score in scored[:10]:
