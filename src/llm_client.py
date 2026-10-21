@@ -1,43 +1,29 @@
 """
-LLM client — powered by the Antigravity IDE CLI.
+LLM client - Azure OpenAI primary backend; Antigravity IDE bridge as fallback.
 
-Two operating modes:
+Priority order for every call_llm() call:
+  1. Azure OpenAI API  - if AZURE_OPENAI_API_KEY + AZURE_OPENAI_ENDPOINT are
+                         present in .env  (this is the default when credentials are set).
+  2. Interactive bridge - SkillOpt paste mode (config.SKILLOPT_BACKEND = "interactive").
+  3. agentapi.bat      - Antigravity fire-and-forget (legacy fallback).
 
-1. agentapi (fire-and-forget) — original default for interactive query / wiki gen.
-   Sends the prompt to the Antigravity IDE chat pane via agentapi.bat.
-   Returns a placeholder string; the AI answers appear in the chat pane.
+Credentials are loaded from .env at project root.  Never hard-code them here.
 
-2. interactive (SkillOpt mode) — no API key required.
-   Sends the prompt to the Antigravity chat pane, then PAUSES and waits for
-   you to paste the AI's response back into this terminal.
-   The pasted text is returned as a real string so SkillOpt can parse it.
-
-   Workflow:
-     • SkillOpt prints the prompt → agentapi.bat sends it to the chat pane.
-     • For prompts that exceed the Windows command-line limit, the prompt is
-       written to  wiki/_prompt.txt  instead — open that file, copy it, and
-       paste it into the Antigravity chat manually.
-     • After the AI responds in the chat pane, copy its reply and paste it
-       into this terminal, then press ENTER on a blank line to continue.
-
-Mode is set by  config.SKILLOPT_BACKEND:
-    "interactive" — SkillOpt interactive bridge (default)
-    "agentapi"    — fire-and-forget (no response capture)
-
-Usage: just call  call_llm(system_prompt, user_prompt)  as before.
+Note: This endpoint uses max_completion_tokens instead of max_tokens.
 """
 
 import os
 import sys
 import subprocess
+import requests as _requests
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 import config
 
 
-# ── Locate agentapi.bat ───────────────────────────────────────────────────────
+# -- Locate agentapi.bat --
 
-def _find_agentapi() -> str | None:
+def _find_agentapi():
     """Return the full path to agentapi.bat, or None if not found."""
     gemini_bin = os.path.join(
         os.path.expanduser("~"), ".gemini", "antigravity-ide", "bin", "agentapi.bat"
@@ -56,17 +42,97 @@ _CONV_ID  = (os.environ.get("ANTIGRAVITY_TRAJECTORY_ID") or
              os.environ.get("ANTIGRAVITY_CONVERSATION_ID") or "")
 
 
-# ── agentapi.bat send helpers ─────────────────────────────────────────────────
+# -- Load .env credentials --
 
-def _agentapi_send(text: str) -> bool:
+def _load_env():
+    """Load variables from .env into os.environ."""
+    env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
+    if not os.path.isfile(env_path):
+        return
+    try:
+        from dotenv import load_dotenv
+        load_dotenv(env_path, override=False)
+    except ImportError:
+        # Manual parse fallback
+        with open(env_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, val = line.partition("=")
+                key = key.strip()
+                val = val.strip().strip('"').strip("'")
+                if key and key not in os.environ:
+                    os.environ[key] = val
+
+
+_load_env()
+
+_AZURE_API_KEY    = os.environ.get("AZURE_OPENAI_API_KEY", "")
+_AZURE_ENDPOINT   = os.environ.get("AZURE_OPENAI_ENDPOINT", "").rstrip("/")
+_AZURE_DEPLOYMENT = os.environ.get("AZURE_OPENAI_DEPLOYMENT", "gpt-5-mini-2")
+_AZURE_API_VER    = os.environ.get("AZURE_OPENAI_API_VERSION", "2025-01-01-preview")
+
+_USE_AZURE = bool(_AZURE_API_KEY and _AZURE_ENDPOINT)
+
+
+# -- Azure OpenAI direct REST call --
+
+def _call_azure(system_prompt, user_prompt, max_tokens=None, temperature=0.3):
     """
-    Try to send `text` via agentapi.bat send-message.
-    Returns True on success, False on failure (e.g. text too long, no agentapi).
+    Call Azure OpenAI via REST API using requests.
+    Uses max_completion_tokens (required by this model/endpoint).
+    For reasoning models (like gpt-5-mini-2), reasoning tokens count towards this limit,
+    so we ensure a minimum floor of 4096 tokens, default to 16384, and use reasoning_effort='low'.
     """
+    default_tokens = getattr(config, "MAX_TOKENS_GENERATE", 16384)
+    effective_tokens = max(max_tokens or default_tokens, 4096)
+    reasoning_effort = getattr(config, "REASONING_EFFORT", "low")
+
+    url = (
+        f"{_AZURE_ENDPOINT}/openai/deployments/{_AZURE_DEPLOYMENT}"
+        f"/chat/completions?api-version={_AZURE_API_VER}"
+    )
+    headers = {
+        "api-key": _AZURE_API_KEY,
+        "Content-Type": "application/json",
+    }
+    body = {
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user",   "content": user_prompt},
+        ],
+        "max_completion_tokens": effective_tokens,
+        "reasoning_effort": reasoning_effort,
+    }
+
+    try:
+        resp = _requests.post(url, json=body, headers=headers, timeout=180)
+    except _requests.exceptions.Timeout:
+        raise RuntimeError("Azure OpenAI request timed out (180s)")
+    except _requests.exceptions.ConnectionError as e:
+        raise RuntimeError(f"Azure OpenAI connection error: {e}")
+
+    if resp.status_code != 200:
+        raise RuntimeError(
+            f"Azure OpenAI error {resp.status_code}: {resp.text[:400]}"
+        )
+
+    data = resp.json()
+    try:
+        content = data["choices"][0]["message"]["content"]
+        return content or ""
+    except (KeyError, IndexError) as e:
+        raise RuntimeError(f"Unexpected Azure OpenAI response shape: {e}\n{data}")
+
+
+# -- agentapi helpers (legacy) --
+
+def _agentapi_send(text):
     if not _AGENTAPI or not _CONV_ID:
         return False
     if len(text) > config.AGENTAPI_MAX_CHARS:
-        return False   # Caller will fall back to file-based delivery
+        return False
     try:
         result = subprocess.run(
             [_AGENTAPI, "send-message", _CONV_ID, text],
@@ -77,109 +143,83 @@ def _agentapi_send(text: str) -> bool:
         return False
 
 
-def _deliver_prompt(full_prompt: str) -> str:
-    """
-    Deliver `full_prompt` to the Antigravity chat pane as reliably as possible.
-    Returns a human-readable string describing HOW it was delivered (for the
-    terminal message shown to the user).
-    """
+def _deliver_prompt(full_prompt):
     if _agentapi_send(full_prompt):
         return "Antigravity chat pane (sent automatically via agentapi)"
-
-    # Prompt too long or agentapi unavailable → write to file
     os.makedirs(os.path.dirname(config.SKILLOPT_PROMPT_FILE), exist_ok=True)
     with open(config.SKILLOPT_PROMPT_FILE, "w", encoding="utf-8") as f:
         f.write(full_prompt)
-
-    # Try sending a short summary notice via agentapi so the chat pane
-    # shows a hint about the pending prompt file.
     notice = (
-        f"[SkillOpt] The full prompt is in:\n"
+        "[SkillOpt] The full prompt is in:\n"
         f"  {config.SKILLOPT_PROMPT_FILE}\n\n"
-        f"Please open that file, copy its contents, paste here, and respond."
+        "Please open that file, copy its contents, paste here, and respond."
     )
     _agentapi_send(notice)
+    return f"file  ->  {config.SKILLOPT_PROMPT_FILE}  (prompt too long for direct send)"
 
-    return f"file  →  {config.SKILLOPT_PROMPT_FILE}  (prompt too long for direct send)"
 
+# -- Multi-line paste collector (SkillOpt interactive mode) --
 
-# ── Multi-line paste collector ────────────────────────────────────────────────
-
-def _collect_paste(label: str = "AI response") -> str:
-    """
-    Interactive: wait for the user to paste multi-line text into the terminal.
-    Ends when the user presses ENTER on an otherwise blank line.
-    Returns the pasted text as a single string.
-    """
-    print(f"\n{'─' * 60}")
+def _collect_paste(label="AI response"):
+    sep = "-" * 60
+    print(f"\n{sep}")
     print(f"  Paste the {label} from the Antigravity chat pane below.")
     print(f"  Then press ENTER on a blank line to continue.")
-    print(f"{'─' * 60}")
-
-    lines: list[str] = []
+    print(sep)
+    lines = []
     while True:
         try:
             line = input()
         except EOFError:
             break
-        # A blank line *after* we have content signals end-of-paste
         if not line.strip() and lines:
             break
         lines.append(line)
-
     result = "\n".join(lines).strip()
-    print(f"{'─' * 60}")
-    print(f"  [✓] Response received ({len(result)} chars)")
-    print(f"{'─' * 60}\n")
+    print(f"  [OK] Response received ({len(result)} chars)\n")
     return result
 
 
-# ── Public API ────────────────────────────────────────────────────────────────
+# -- Public API --
 
-def call_llm(
-    system_prompt: str,
-    user_prompt: str,
-    max_tokens: int = None,
-    temperature: float = None,
-) -> str:
+def call_llm(system_prompt, user_prompt, max_tokens=None, temperature=None):
     """
-    Send a prompt and return the LLM response.
+    Send a prompt and return the LLM response as a string.
 
-    Behaviour depends on  config.SKILLOPT_BACKEND:
-
-    "interactive"  — Sends the prompt to the Antigravity chat pane (or saves it
-                     to a file if it's too long), then pauses and waits for you
-                     to paste the AI's response into this terminal.
-                     Returns the pasted response as a real string.
-                     Use this mode when running  python main.py --skillopt.
-
-    "agentapi"     — Fire-and-forget: sends the prompt and returns a placeholder.
-                     The AI responds in the chat pane; the response is NOT captured.
-                     Use this mode for normal interactive query / wiki generation.
+    Priority:
+      1. Azure OpenAI  (when .env has AZURE_OPENAI_API_KEY + AZURE_OPENAI_ENDPOINT)
+      2. SkillOpt interactive bridge  (config.SKILLOPT_BACKEND == "interactive")
+      3. Antigravity agentapi fire-and-forget  (legacy)
     """
-    full_prompt = f"{system_prompt}\n\n---\n\n{user_prompt}"
-    backend     = getattr(config, "SKILLOPT_BACKEND", "agentapi")
+    _max_tokens  = max_tokens  if max_tokens  is not None else config.MAX_TOKENS_GENERATE
+    _temperature = temperature if temperature is not None else config.TEMPERATURE
 
-    # ── Interactive bridge mode (SkillOpt) ─────────────────────────────────────
+    # 1. Azure OpenAI (primary)
+    if _USE_AZURE:
+        return _call_azure(system_prompt, user_prompt, _max_tokens, _temperature)
+
+    # 2. Interactive bridge (SkillOpt, no API key needed)
+    backend = getattr(config, "SKILLOPT_BACKEND", "agentapi")
     if backend == "interactive":
+        full_prompt = f"{system_prompt}\n\n---\n\n{user_prompt}"
         delivery = _deliver_prompt(full_prompt)
         print(f"\n  [SkillOpt] Prompt delivered via: {delivery}")
         return _collect_paste()
 
-    # ── Fire-and-forget mode (normal usage) ───────────────────────────────────
+    # 3. Antigravity agentapi (legacy fire-and-forget)
+    full_prompt = f"{system_prompt}\n\n---\n\n{user_prompt}"
     if not _AGENTAPI:
         raise RuntimeError(
-            "agentapi.bat not found — make sure you are running inside "
-            "the Antigravity IDE terminal."
+            "No Azure credentials found in .env AND agentapi.bat not found.\n"
+            "Add AZURE_OPENAI_API_KEY + AZURE_OPENAI_ENDPOINT to .env and retry."
         )
     if not _CONV_ID:
         raise RuntimeError(
-            "ANTIGRAVITY_TRAJECTORY_ID not set — run this script from the "
-            "Antigravity IDE terminal."
+            "No Azure credentials in .env AND ANTIGRAVITY_TRAJECTORY_ID not set.\n"
+            "Add AZURE_OPENAI_API_KEY + AZURE_OPENAI_ENDPOINT to .env and retry."
         )
     sent = _agentapi_send(full_prompt)
     if not sent:
-        # Fallback: truncate to fit command-line limit
         short = full_prompt[:config.AGENTAPI_MAX_CHARS] + "\n...[truncated]"
         result = subprocess.run(
             [_AGENTAPI, "send-message", _CONV_ID, short],
@@ -187,10 +227,10 @@ def call_llm(
         )
         if result.returncode != 0:
             raise RuntimeError(f"agentapi send-message failed: {result.stderr.strip()}")
-    return "\n[✓] Query sent to Antigravity AI — see the Antigravity chat pane.\n"
+    return "\n[OK] Query sent to Antigravity AI - see the Antigravity chat pane.\n"
 
 
-# Aliases (used by generate_wiki, crosslink, update — kept for compatibility)
+# Aliases - kept for compatibility with generate_wiki, crosslink, update, query
 call_llm_generate  = call_llm
 call_llm_query     = call_llm
 call_llm_crosslink = call_llm

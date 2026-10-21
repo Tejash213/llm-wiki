@@ -58,13 +58,38 @@ def read_text(filepath: str) -> str:
     return ""
 
 
+def read_pdf(filepath: str) -> str:
+    """Extract plain text from a .pdf file."""
+    try:
+        import pymupdf as fitz
+    except ImportError:
+        try:
+            import fitz
+        except ImportError:
+            fitz = None
+    if fitz:
+        try:
+            doc = fitz.open(filepath)
+            text = "\n".join(page.get_text() for page in doc)
+            return text
+        except Exception as e:
+            print(f"  [WARN] Could not read PDF with fitz {filepath}: {e}")
+    try:
+        import pdfplumber
+        with pdfplumber.open(filepath) as pdf:
+            return "\n".join(page.extract_text() or "" for page in pdf.pages)
+    except Exception as e:
+        print(f"  [WARN] Could not read PDF with pdfplumber {filepath}: {e}")
+    return ""
+
+
 def ingest_documents(documents_dir: str = None) -> list[dict]:
     """
     Walk DOCUMENTS_DIR and return a list of document records.
     Each record: { 'filename': str, 'date': str, 'text': str }
     """
     documents_dir = documents_dir or config.DOCUMENTS_DIR
-    supported = {".docx", ".txt", ".md"}
+    supported = {".docx", ".txt", ".md", ".pdf"}
     records = []
 
     if not os.path.isdir(documents_dir):

@@ -22,7 +22,7 @@ import time
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 import config
-from src.ingest import ingest_documents, read_docx, read_text, extract_date_from_filename
+from src.ingest import ingest_documents, read_docx, read_text, read_pdf, extract_date_from_filename
 from src.llm_client import call_llm
 from src.generate_wiki import save_wiki_page, build_index, title_to_filename, load_processed, save_processed
 from src.crosslink import load_all_pages, extract_titles, crosslink_page
@@ -118,6 +118,8 @@ def read_document(filepath: str) -> dict:
 
     if ext == ".docx":
         text = read_docx(filepath)
+    elif ext == ".pdf":
+        text = read_pdf(filepath)
     elif ext in (".txt", ".md"):
         text = read_text(filepath)
     else:
@@ -180,6 +182,132 @@ Extract information from this document ({doc['filename']}, {doc['date']}):
     return call_llm(NEW_PAGE_SYSTEM, user_prompt, max_tokens=config.MAX_TOKENS_GENERATE)
 
 
+def update_document(doc_path: str, force: bool = False, callback=None) -> dict:
+    """
+    Ingest a new document and incrementally update the wiki.
+    Calls callback(message, level) if provided.
+    Returns summary dict { filename, updated, created, affected }.
+    """
+    def log(msg, level="info"):
+        if callback:
+            callback(msg, level)
+        else:
+            print(msg)
+
+    if not os.path.isfile(doc_path):
+        raise FileNotFoundError(f"File not found: {doc_path}")
+
+    fname = os.path.basename(doc_path)
+    processed = load_processed()
+    if fname in processed and not force:
+        log(f"[WARN] Document '{fname}' was already processed. Set force=True to reprocess.", "warn")
+        return {
+            "status": "skipped",
+            "message": f"Document already processed: {fname}",
+            "filename": fname,
+            "updated": [],
+            "created": [],
+        }
+
+    log(f"[Stage 1] Reading document: {fname}", "stage")
+    doc = read_document(doc_path)
+    log(f"  Extracted {len(doc['text']):,} characters (Date: {doc['date']})", "info")
+
+    pages = load_all_pages()
+    existing_filenames = list(pages.keys())
+
+    log("[Stage 2] Identifying relevant wiki pages via Azure LLM...", "stage")
+    plan = find_relevant_pages(doc, existing_filenames)
+    to_update = plan.get("update", [])
+    to_create = plan.get("create", [])
+
+    log(f"  Plan: {len(to_update)} pages to update, {len(to_create)} new pages to create", "info")
+
+    created_pages = []
+
+    # Merge into existing pages
+    for page_fname in to_update:
+        if page_fname not in pages:
+            log(f"  [SKIP] Page not found: {page_fname}", "warn")
+            continue
+        log(f"  [MERGE] Merging into {page_fname}...", "info")
+        try:
+            updated = merge_page(pages[page_fname], doc)
+            if updated.strip():
+                fpath = os.path.join(config.WIKI_DIR, page_fname)
+                with open(fpath, "w", encoding="utf-8") as f:
+                    f.write(updated)
+                log(f"    -> Updated {page_fname}", "success")
+        except Exception as e:
+            log(f"  [ERROR] Failed to merge {page_fname}: {e}", "error")
+        time.sleep(0.3)
+
+    # Create new pages
+    for concept in to_create:
+        title    = concept.get("title", "Untitled")
+        filename = concept.get("filename") or title_to_filename(title)
+        log(f"  [NEW] Creating new page '{title}' -> {filename}...", "info")
+        try:
+            content = create_new_page(concept, doc)
+            if content.strip():
+                save_wiki_page(title, filename, content)
+                created_pages.append({"title": title, "filename": filename})
+                log(f"    -> Created {filename}", "success")
+        except Exception as e:
+            log(f"  [ERROR] Failed to create page {title}: {e}", "error")
+        time.sleep(0.3)
+
+    # Mark as processed
+    processed[fname] = {
+        "date": doc["date"],
+        "updated_pages": to_update,
+        "created_pages": [p["filename"] for p in created_pages],
+    }
+    save_processed(processed)
+
+    # Rebuild index
+    log("[Stage 3] Rebuilding wiki index (_index.md)...", "stage")
+    all_pages_content = load_all_pages()
+    titles_map = extract_titles(all_pages_content)
+    index_data = {}
+    for title, f in titles_map.items():
+        content = all_pages_content.get(f, "")
+        m = re.search(r'^type:\s*(.+)$', content, re.MULTILINE)
+        ptype = m.group(1).strip() if m else "unknown"
+        index_data[title] = {"type": ptype, "filename": f}
+    build_index(index_data)
+
+    # Targeted cross-linking
+    affected = set(to_update) | {p["filename"] for p in created_pages}
+    if affected:
+        log(f"[Stage 4] Cross-linking {len(affected)} modified pages...", "stage")
+        all_titles = list(titles_map.keys())
+        for page_fname in affected:
+            fpath = os.path.join(config.WIKI_DIR, page_fname)
+            if not os.path.isfile(fpath):
+                continue
+            with open(fpath, "r", encoding="utf-8") as f:
+                content = f.read()
+            try:
+                updated = crosslink_page(content, all_titles)
+                if updated.strip() and updated.strip() != content.strip():
+                    with open(fpath, "w", encoding="utf-8") as f:
+                        f.write(updated)
+                    log(f"    -> Cross-linked: {page_fname}", "info")
+            except Exception as e:
+                log(f"  [ERROR] Cross-link error {page_fname}: {e}", "error")
+            time.sleep(0.3)
+
+    log(f"[COMPLETE] Ingestion & Update finished! {len(to_update)} updated, {len(created_pages)} created.", "success")
+    return {
+        "status": "success",
+        "filename": fname,
+        "updated": to_update,
+        "created": [p["filename"] for p in created_pages],
+        "affected": list(affected)
+    }
+
+
 def run(doc_path: str = None):
     print("=" * 60)
     print("Stage 5 — Continuous Update Cycle")
@@ -192,118 +320,17 @@ def run(doc_path: str = None):
         print(f"[ERROR] File not found: {doc_path}")
         return
 
-    # Check if already processed
     processed = load_processed()
     fname = os.path.basename(doc_path)
+    force = False
     if fname in processed:
         print(f"[WARN] This document has already been processed: {fname}")
         ans = input("Re-process anyway? (y/N): ").strip().lower()
         if ans != "y":
             return
+        force = True
 
-    print(f"\n[Reading] {doc_path}")
-    doc = read_document(doc_path)
-    print(f"  -> {len(doc['text']):,} characters extracted")
-
-    # Load current wiki
-    pages = load_all_pages()
-    existing_filenames = list(pages.keys())
-
-    if not existing_filenames:
-        print("[WARN] No existing wiki pages found. Run generate_wiki.py first for initial batch.")
-
-    print(f"\n[Relevance] Asking GPT-4.1 which pages to update...")
-    plan = find_relevant_pages(doc, existing_filenames)
-
-    to_update = plan.get("update", [])
-    to_create = plan.get("create", [])
-    print(f"  -> Pages to update: {len(to_update)}")
-    print(f"  -> New pages to create: {len(to_create)}\n")
-
-    created_pages = []
-
-    # Merge into existing pages
-    for page_fname in to_update:
-        if page_fname not in pages:
-            print(f"  [SKIP] Page not found in wiki: {page_fname}")
-            continue
-        print(f"  [MERGE] {page_fname}")
-        try:
-            updated = merge_page(pages[page_fname], doc)
-        except RuntimeError as e:
-            print(f"  [ERROR] {e}")
-            continue
-
-        if updated.strip():
-            fpath = os.path.join(config.WIKI_DIR, page_fname)
-            with open(fpath, "w", encoding="utf-8") as f:
-                f.write(updated)
-            print(f"    -> Updated")
-        time.sleep(0.5)
-
-    # Create new pages
-    for concept in to_create:
-        title    = concept.get("title", "Untitled")
-        filename = concept.get("filename") or title_to_filename(title)
-        print(f"  [NEW]   {title} -> {filename}")
-        try:
-            content = create_new_page(concept, doc)
-        except RuntimeError as e:
-            print(f"  [ERROR] {e}")
-            continue
-
-        if content.strip():
-            save_wiki_page(title, filename, content)
-            created_pages.append({"title": title, "filename": filename})
-            print(f"    -> Created")
-        time.sleep(0.5)
-
-    # Mark as processed
-    processed[fname] = {
-        "date": doc["date"],
-        "updated_pages": to_update,
-        "created_pages": [p["filename"] for p in created_pages],
-    }
-    save_processed(processed)
-
-    # Rebuild index
-    print("\n[Index] Rebuilding _index.md ...")
-    all_pages_content = load_all_pages()
-    titles_map = extract_titles(all_pages_content)
-    index_data = {}
-    for title, f in titles_map.items():
-        content = all_pages_content.get(f, "")
-        m = re.search(r'^type:\s*(.+)$', content, re.MULTILINE)
-        ptype = m.group(1).strip() if m else "unknown"
-        index_data[title] = {"type": ptype, "filename": f}
-    build_index(index_data)
-
-    # Targeted cross-link pass for modified/new pages
-    affected = set(to_update) | {p["filename"] for p in created_pages}
-    if affected:
-        print(f"\n[Cross-link] Enriching {len(affected)} affected pages...")
-        all_titles = list(titles_map.keys())
-        for page_fname in affected:
-            fpath = os.path.join(config.WIKI_DIR, page_fname)
-            if not os.path.isfile(fpath):
-                continue
-            with open(fpath, "r", encoding="utf-8") as f:
-                content = f.read()
-            print(f"  [LLM]  {page_fname}")
-            try:
-                updated = crosslink_page(content, all_titles)
-            except RuntimeError as e:
-                print(f"  [ERROR] {e}")
-                continue
-            if updated.strip() and updated.strip() != content.strip():
-                with open(fpath, "w", encoding="utf-8") as f:
-                    f.write(updated)
-                print(f"    -> Links added")
-            time.sleep(0.5)
-
-    print(f"\n[Done] Update complete.")
-    print(f"  Updated: {len(to_update)} pages")
-    print(f"  Created: {len(created_pages)} new pages\n")
+    update_document(doc_path, force=force)
 
 
 if __name__ == "__main__":

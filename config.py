@@ -17,13 +17,14 @@ WIKI_DIR      = os.path.join(os.path.dirname(__file__), "wiki")
 PROCESSED_LOG = os.path.join(WIKI_DIR, "_processed.json")
 
 # ── Generation settings ───────────────────────────────────────────────────────
-MAX_TOKENS_GENERATE = 4096
-MAX_TOKENS_QUERY    = 2048
+MAX_TOKENS_GENERATE = 16384
+MAX_TOKENS_QUERY    = 4096
 TEMPERATURE         = 0.3
-DOC_CHUNK_CHARS     = 12000
+DOC_CHUNK_CHARS     = 10000
+REASONING_EFFORT    = "low"   # "low" | "medium" | "high" for Azure reasoning models
 
 # ── SkillOpt paths ────────────────────────────────────────────────────────────
-SKILL_PATH    = os.path.join(WIKI_DIR, "Best Wiki Skill.md")
+SKILL_PATH    = os.path.join(WIKI_DIR, "best_skill.md")
 SKILLOPT_LOG  = os.path.join(WIKI_DIR, "_skillopt_log.json")
 SKILLOPT_PROMPT_FILE = os.path.join(WIKI_DIR, "_prompt.txt")  # for long prompts
 

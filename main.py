@@ -41,6 +41,16 @@ def main():
     args = sys.argv[1:]
     args_set = set(args)
 
+    # ── Web UI: Interactive Browser App ───────────────────────────────────────
+    if "--ui" in args_set or "--server" in args_set:
+        from app import app
+        port = int(os.environ.get("PORT", 5000))
+        print("=" * 65)
+        print(f"[WEB UI] Launching Karpathy Wiki at: http://localhost:{port}")
+        print("=" * 65)
+        app.run(host="127.0.0.1", port=port, debug=False, threaded=True)
+        return
+
     # ── SkillOpt: initialise seed skill ───────────────────────────────────────
     if "--skillopt-init" in args_set:
         _run_skillopt_init()

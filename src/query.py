@@ -244,6 +244,53 @@ def answer_question(query: str, pages: dict[str, str], observer=None) -> str:
     return main_answer
 
 
+def run_query(query: str, mode: str = "ai") -> dict:
+    """
+    Programmatic entry point for queries (used by Web UI and APIs).
+    mode can be 'ai' (Azure LLM synthesis) or 'search' (keyword matching).
+    """
+    pages = load_wiki_pages()
+    scored = score_pages(query, pages)
+    top_results = []
+    for fname, score in scored[:10]:
+        if score > 0:
+            content = pages.get(fname, "")
+            summary = ""
+            for line in content.splitlines():
+                line = line.strip()
+                if line and not line.startswith("#") and not line.startswith("[[") and not line.startswith("---") and not line.startswith("title:") and not line.startswith("aliases:"):
+                    summary = line[:300]
+                    break
+            top_results.append({
+                "filename": fname,
+                "title": fname.replace(".md", ""),
+                "score": float(score),
+                "preview": summary,
+                "wikilinks": extract_wikilinks(content)[:8]
+            })
+
+    if mode == "search":
+        return {
+            "query": query,
+            "mode": "search",
+            "results": top_results,
+            "answer": None,
+            "total_matches": len(top_results)
+        }
+
+    # AI Mode
+    answer = answer_question(query, pages)
+    main_answer, follow_links = extract_follow_links(answer)
+    return {
+        "query": query,
+        "mode": "ai",
+        "answer": main_answer,
+        "follow_links": follow_links,
+        "retrieved": top_results[:5],
+        "total_matches": len(top_results)
+    }
+
+
 # ── CLI ───────────────────────────────────────────────────────────────────────
 
 BANNER = """

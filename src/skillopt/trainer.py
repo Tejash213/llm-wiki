@@ -26,6 +26,11 @@ from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 import config
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 from src.skillopt.config_defaults import SkillOptConfig, DEFAULT_CONFIG
 from src.skillopt.skill_state import load_skill, save_skill, hash_skill
 from src.skillopt.optimizer import run_epoch, _evaluate_on_split
@@ -242,7 +247,7 @@ def train(cfg: SkillOptConfig = None) -> str:
         run_log["test_score"] = test_score
         print(f"[Test] Final test score: {test_score:.4f}  "
               f"(baseline was {run_log['baseline_val']:.4f}, "
-              f"Δ={test_score - run_log['baseline_val']:+.4f})\n")
+              f"delta={test_score - run_log['baseline_val']:+.4f})\n")
 
         # Persist final test score to log
         log = _load_log(_log_path())
@@ -258,7 +263,7 @@ def train(cfg: SkillOptConfig = None) -> str:
     print(f"  Train log:   {_log_path()}")
     print(f"  Val score:   {best_val_score:.4f}  "
           f"(baseline: {run_log['baseline_val']:.4f}, "
-          f"\u0394={best_val_score - run_log['baseline_val']:+.4f})")
+          f"delta={best_val_score - run_log['baseline_val']:+.4f})")
     print("=" * 60 + "\n")
 
     # Restore the original backend so --query mode is unaffected.

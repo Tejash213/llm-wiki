@@ -221,13 +221,16 @@ def _ensure_index_backlink(content: str) -> str:
 def _sanitise_json(raw: str) -> str:
     """
     Clean common issues in LLM JSON output:
-    - Strip markdown fences
+    - Extract JSON from markdown fences anywhere in text
     - Replace literal control characters inside JSON strings (\n, \t, etc.)
       that cause json.JSONDecodeError 'Invalid control character'
     """
     raw = raw.strip()
-    # Remove markdown code fences
-    if raw.startswith("```"):
+    # Extract from markdown code fences if present anywhere
+    m = re.search(r"```(?:json)?\s*([\s\S]*?)\s*```", raw)
+    if m:
+        raw = m.group(1).strip()
+    elif raw.startswith("```"):
         raw = re.sub(r"^```[a-zA-Z]*\n?", "", raw)
         raw = re.sub(r"\n?```$", "", raw)
     raw = raw.strip()
@@ -310,6 +313,8 @@ def generate_wiki_from_document(doc: dict, skill_override: str = None) -> list[d
 
     try:
         data = json.loads(raw)
+        if isinstance(data, list):
+            data = {"pages": data}
     except json.JSONDecodeError as e:
         print(f"  [WARN] JSON parse error for {doc['filename']}: {e}")
         print(f"         Raw response (first 300 chars): {raw[:300]}")
