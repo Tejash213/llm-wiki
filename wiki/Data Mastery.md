@@ -1,30 +1,30 @@
 ---
 title: Data Mastery
 aliases:
-  - "Data Mastery"
+  - Data Mastery
 type: concept
 tags: []
 last_updated: 2026-05-12
-sources: []
+sources: ["05-12 Commercial Real Estate Operations-Technology Insights and Perspectives.docx"]
 ---
 
 ## Summary
-[[Data Mastery]] is the foundational principle of operational excellence, involving the connection, structuring, and enrichment of data from core systems to optimize enterprise workflows.
+Data mastery is the disciplined practice of connecting, tagging, and enriching both structured and unstructured enterprise data to enable meaningful AI-driven operational workflows.
 
 ## Key Points
-- Operational data is often siloed and underutilized compared to structured financial data.
-- Mastering data involves connecting to systems of record, applying rich metadata, and transforming repositories into intelligent knowledge bases.
-- Enables unified views and supports intelligent actions by [[AI Agents]].
+- Mastery prioritizes connecting to systems of record (e.g., Yardi) and using their structured data as metadata to enrich operational datasets.
+- Unstructured content in repositories (Box, SharePoint) must be consistently tagged with metadata derived from core systems to become an intelligent, searchable knowledge base.
+- The primary goal is not to replicate systems of record but to unify and contextualize data to enable automated decision support and workflow actions.
 
 ## Related Concepts
-[[Applied Intelligence Architecture]], [[Enterprise AI Integration]], [[Yardi]], [[Brava Systems]]
+[[Yardi]], [[Metadata Tagging]], [[Enterprise Content Management]], [[Knowledge Base]], [[Platform Connectivity]]
 
 ## Source Documents
 - 05-12 Commercial Real Estate Operations-Technology Insights and Perspectives.docx
 
 ---
 
-
----
-
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

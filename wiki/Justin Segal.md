@@ -1,31 +1,30 @@
 ---
 title: Justin Segal
 aliases:
-  - "Justin Segal"
+  - Justin Segal
 type: entity
 tags: []
-last_updated: 2024-06-09
-sources: []
+last_updated: 2026-10-13
+sources: ["Boxer AI Show and Tell.docx"]
 ---
 
 ## Summary
-Justin Segal is the co-founder of [[Boxer Property]] and a key proponent of balanced, incremental [[AI Adoption]] and strong data practices within the company.
+Justin Segal is identified in the document as the president of Boxer and the presenter of the "Boxer AI Show and Tell" session.
 
 ## Key Points
-- Co-founded [[Boxer Property]] in 1992.
-- Advocates for building a strong data foundation and incremental [[Enterprise AI Rollout|AI Rollout]].
-- Emphasizes [[Agentic AI|AI]] as an enabler of [[Employee Fulfillment]] and innovation.
-- Promotes [[Healthy Risk Taking]] and experimentation with [[Agentic AI|AI]] tools.
+- Justin Segal opened and led the internal presentation discussing AI strategy and impact at Boxer.
+- He framed the discussion around company philosophy, vocabulary about AI, uses and target outcomes, tools and capacities, and a roadmap.
+- He contrasted traditional hiring/value models (experience vs. personality/aptitude) in the context of AI adoption.
 
 ## Related Concepts
-[[Boxer Property]], [[Brava Systems]], [[Incremental AI Rollout]], [[Employee Fulfillment]], [[Healthy Risk Taking]]
+[[Boxer]], [[Boxer AI Show and Tell]], [[AI Philosophy]], [[Hiring for Aptitude]], [[Company Culture]]
 
 ## Source Documents
-- Podcast about Data Global Teams and Brava Systems AI to Transform Boxer.docx
-
----
-
+- Boxer AI Show and Tell.docx
 
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

@@ -1,0 +1,128 @@
+{
+  "runs": [
+    {
+      "started": "2026-10-13T13:28:45.931938",
+      "config": {
+        "epochs": 4,
+        "rollout_batch_size": 10,
+        "minibatch_size": 4,
+        "edit_budget": 4,
+        "lr_schedule": "cosine",
+        "lr_floor": 2,
+        "split_ratio": [
+          0.4,
+          0.1,
+          0.5
+        ],
+        "split_seed": 42,
+        "strict_gate": true,
+        "slow_update_enabled": true,
+        "slow_update_n": 10,
+        "meta_skill_enabled": true,
+        "rejected_buffer_enabled": true,
+        "rejected_buffer_max": 20,
+        "edit_mode": "patch",
+        "optimizer_model": "gpt-4.1",
+        "max_tokens_reflection": 2048,
+        "max_tokens_slow_update": 1024,
+        "dry_run": false,
+        "verbose": true
+      },
+      "n_train": 12,
+      "n_sel": 3,
+      "n_test": 16,
+      "baseline_val": 0.0,
+      "epochs": [
+        {
+          "epoch": 1,
+          "val_score": 0.0,
+          "skill_hash": "4103e5ac8844d72a",
+          "steps": [
+            {
+              "epoch": 0,
+              "train_score": 0.0,
+              "val_score": 0.0,
+              "accepted": false,
+              "n_edits_applied": 0,
+              "n_rejected_buffer": 0,
+              "skill_hash": "4103e5ac8844d72a",
+              "timestamp": "2026-10-13T13:34:41.103007"
+            },
+            {
+              "epoch": 0,
+              "train_score": 0.0,
+              "val_score": 0.0,
+              "accepted": false,
+              "n_edits_applied": 0,
+              "n_rejected_buffer": 0,
+              "skill_hash": "4103e5ac8844d72a",
+              "timestamp": "2026-10-13T13:36:15.316034"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "started": "2026-10-13T16:15:43.832816",
+      "config": {
+        "epochs": 4,
+        "rollout_batch_size": 10,
+        "minibatch_size": 4,
+        "edit_budget": 4,
+        "lr_schedule": "cosine",
+        "lr_floor": 2,
+        "split_ratio": [
+          0.4,
+          0.1,
+          0.5
+        ],
+        "split_seed": 42,
+        "strict_gate": true,
+        "slow_update_enabled": true,
+        "slow_update_n": 10,
+        "meta_skill_enabled": true,
+        "rejected_buffer_enabled": true,
+        "rejected_buffer_max": 20,
+        "edit_mode": "patch",
+        "optimizer_model": "gpt-4.1",
+        "max_tokens_reflection": 2048,
+        "max_tokens_slow_update": 1024,
+        "dry_run": false,
+        "verbose": true
+      },
+      "n_train": 12,
+      "n_sel": 3,
+      "n_test": 16,
+      "baseline_val": 0.0,
+      "epochs": [
+        {
+          "epoch": 1,
+          "val_score": 0.0,
+          "skill_hash": "4103e5ac8844d72a",
+          "steps": [
+            {
+              "epoch": 0,
+              "train_score": 0.0,
+              "val_score": 0.0,
+              "accepted": false,
+              "n_edits_applied": 1,
+              "n_rejected_buffer": 1,
+              "skill_hash": "4103e5ac8844d72a",
+              "timestamp": "2026-10-13T16:23:38.081307"
+            },
+            {
+              "epoch": 0,
+              "train_score": 0.0,
+              "val_score": 0.0,
+              "accepted": false,
+              "n_edits_applied": 3,
+              "n_rejected_buffer": 4,
+              "skill_hash": "4103e5ac8844d72a",
+              "timestamp": "2026-10-13T16:26:28.773631"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

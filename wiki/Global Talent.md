@@ -1,30 +1,30 @@
 ---
 title: Global Talent
 aliases:
-  - "Global Talent"
-type: concept
+  - Global Talent
+type: theme
 tags: []
-last_updated: 2024-06-10
+last_updated: 2026-02-27
 sources: []
 ---
 
 ## Summary
-[[Global Talent]] refers to the integration of international teams working collaboratively with AI and data systems to support enterprise operations.
+Global Talent is a strategy of leveraging distributed, international knowledge workers to augment and reconfigure knowledge work, creating capacity for tooling, scale, and 24-hour operations.
 
 ## Key Points
-- [[Boxer]] leverages [[Global Teams]] for symbiotic workflows with AI and data.
-- [[Global Talent]] enables around-the-clock operations and supports AI-driven processes.
-- Integration of [[Global Talent]] is fundamental to Boxer's [[AI Strategy]].
+- AI augments rather than replaces people; global talent enables separation of knowledge work from physical location constraints.
+- Building annotation systems to describe work clearly allows information-centric tasks to be done anywhere.
+- Combining domestic offices with offshore teams (e.g., India, Honduras, Mexico, Philippines) yields cost savings, increased time utilization, and access to a wider talent pool.
 
 ## Related Concepts
-[[Boxer]], [[AI Strategy]], [[AI Roadmap]]
+[[Annotation System]], [[Global Footprint]], [[Virtuous Cycle]], [[Specialized AI Talent]]
 
 ## Source Documents
-- AI Strategy for Department Heads 2026-03-25.docx
-
----
-
+- 02-27 Briefing_ Self-Driving Company Architecture and Global Talent Strategy-Summary.docx
 
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

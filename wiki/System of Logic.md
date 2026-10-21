@@ -1,30 +1,30 @@
 ---
-title: System of Logic
+title: System Of Logic
 aliases:
-  - "System of Logic"
+  - System Of Logic
 type: concept
 tags: []
 last_updated: 2026-02-25
-sources: []
+sources: ["A New Architecture for the Intelligent Enterprise 2026-02-25.docx"]
 ---
 
 ## Summary
-The [[System of Logic]] is a universal adapter layer that connects disparate data sources, business logic, and user interfaces, enabling seamless interoperability across enterprise platforms.
+A middle layer that acts as a universal adapter connecting disparate data sources, business logic, and user interfaces to enable consistent interoperability and governance.
 
 ## Key Points
-- Acts as a middle layer, not necessarily replacing core systems like SAP or Salesforce.
-- Facilitates managed migration away from legacy platforms.
-- Uses APIs and pointers to integrate external databases and systems efficiently.
+- Functions as a unifying fabric rather than a replacement for core systems like SAP or Salesforce.
+- Provides APIs and adapters to interoperate with external systems and can become the system of record over time.
+- Supports managed migration strategies and enforces the principle that data has a rightful place to live.
 
 ## Related Concepts
-[[Intelligent Enterprise Architecture]], [[Data Layer]], [[Brava Systems]]
+[[System Of Record]], [[Pointers And APIs]], [[Centralized Data Layer]], [[Governance And Cost Management]]
 
 ## Source Documents
 - A New Architecture for the Intelligent Enterprise 2026-02-25.docx
 
 ---
 
-
----
-
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

@@ -1,32 +1,31 @@
 ---
 title: Self-Driving Company
 aliases:
-  - "Self-Driving Company"
+  - Self-Driving Company
 type: concept
 tags: []
-last_updated: 2024-06-10
+last_updated: 2026-02-27
 sources: []
 ---
 
 ## Summary
-A [[Self-Driving Company]] is an organizational model that transitions from [[Manual Operations]], dashboard-centric workflows to [[Agentic Orchestration]], where autonomous agents plan, retrieve, analyze, display, and act with integrated human oversight.
+A Self-Driving Company is an organizational model that shifts manual operational work into an agentic, orchestrated system where software agents plan, retrieve, analyze, display, and act while humans remain in the loop for input, oversight, and redirection.
 
 ## Key Points
-- The [[Self-Driving Company]] metaphor compares [[Manual Operations]] to autonomous orchestration, similar to self-driving cars.
-- Agents convert natural language requests into technical specifications, retrieve and visualize data, and trigger actions.
-- Human input and decision authority remain central, with agents optimizing processes and preventing errors.
-- [[Domain Expert Agents]] and [[Orchestration Agents]] enhance functional intelligence and workflow management.
-- Integration of [[Global Talent]] is a catalyst for adopting [[Self-Driving Company]] architecture.
+- Replaces dashboard-centric, manual workflows with integrated agent orchestration that automates planning, data retrieval, analysis, visualization, and execution.
+- Emphasizes human oversight: people provide intent, make decisions, and redirect agents rather than performing repetitive information work.
+- Integrates domain expert agents, planner-executor orchestration, and global talent to scale knowledge work and operational impact.
+- Treats technological capabilities and human teams as parts of a single living system rather than disconnected features.
 
 ## Related Concepts
-[[Agent Architecture]], [[Domain Expert Agents]], [[Orchestration Agents]], [[Global Talent Strategy]], [[Integrated Systems]], [[Manual Operations]], [[Agentic Orchestration]]
+[[Agent Architecture]], [[Understanding Agent]], [[Search Agent]], [[Display and Interaction]], [[Action and Execution]], [[Domain Expert Agents]], [[Orchestration Agents]], [[Global Talent]], [[Integrated Systems]]
 
 ## Source Documents
 - 02-27 Briefing_ Self-Driving Company Architecture and Global Talent Strategy-Summary.docx
 
 ---
 
-
----
-
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

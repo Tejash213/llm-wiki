@@ -1,30 +1,30 @@
 ---
 title: Understanding Agent
 aliases:
-  - "Understanding Agent"
-type: entity
+  - Understanding Agent
+type: concept
 tags: []
-last_updated: 2024-06-10
-sources: []
+last_updated: 2026-02-25
+sources: ["A New Architecture for the Intelligent Enterprise 2026-02-25.docx"]
 ---
 
 ## Summary
-[[Understanding Agent]] is an [[Integrated AI Systems|AI system]] at [[Boxer]] that maps user language to the organization's schema, facilitating accurate interpretation of requests.
+A specialized AI agent that dynamically maps relationships in an organization's data landscape and returns machine-readable schemas (e.g., JSON) to enable other agents to interact with systems reliably.
 
 ## Key Points
-- Understands system configuration and translates language into schema-specific queries.
-- Example: Interprets "building equipment manufactured by Trane" as a chiller.
-- Integrates with other [[AI agents]] for workflow automation.
+- Acts as an interoperability translator by producing complete data schemas with fields, associations, and connections.
+- Enables on-the-fly integration and eliminates brittle, hard-coded connectors by providing precise instructions to other agents.
+- Central to automating the configuration of new data sources and enabling agentic collaboration.
 
 ## Related Concepts
-[[Boxer]], [[Insight Navigator]], [[Action Agent]], [[Foundry]], [[AI Solutions Inventory]]
+[[Agentic Ecosystem]], [[Agentic Flow]], [[Pointers And APIs]], [[Programmatic Normalization]]
 
 ## Source Documents
-- AI Strategy for Department Heads 2026-03-25.docx
-
----
-
+- A New Architecture for the Intelligent Enterprise 2026-02-25.docx
 
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

@@ -1,31 +1,30 @@
 ---
 title: Search Agent
 aliases:
-  - "Search Agent"
+  - Search Agent
 type: entity
 tags: []
-last_updated: 2026-03-06
+last_updated: 2026-02-25
 sources: []
 ---
 
 ## Summary
-The [[Search Agent]] retrieves data for targeted intents, executing queries based on upstream payloads, constraints, and permissions, with a focus on efficiency and cost control.
+An AI agent that performs semantic and keyword-based searches across company datasets to retrieve actionable information efficiently.
 
 ## Key Points
-- Executes permission-aware, payload-constrained searches.
-- Can act as a resource hog if unconstrained; [[Orchestration Layer]] mitigates this risk.
-- Accepts advice and inputs to scope execution.
-- Cost and latency safeguards are required.
+- Supports both semantic and traditional keyword search modalities for flexible retrieval.
+- Designed to surface actionable insights from diverse datasets within the platform.
+- Integrates with other agents (e.g., Insight Navigator) to support downstream decision-making and actions.
 
 ## Related Concepts
-[[Multi-Agent AI Orchestration]], [[General - Coordinator Agent|General/Coordinator Agent]], [[Understanding Agent]], [[Action Agent]], [[Cost Governance]], [[Security and Permissions]]
+[[Demonstration of AI Agents and System Architecture]], [[Understanding Agent]], [[Action Agent]]
 
 ## Source Documents
-- 03-06 Workshop_ Multi-Agent AI Orchestration, Pseudocode Interface, and Cost Governance-Summary.docx
-
----
-
+- Various Content Blocks for AI and FutureSense 2026-02-25.txt
 
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

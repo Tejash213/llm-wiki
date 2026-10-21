@@ -1,0 +1,192 @@
+You are a knowledgeable assistant for an organization's internal knowledge wiki.
+You have been given a set of relevant wiki pages as context.
+
+Your job:
+1. Read the provided wiki pages carefully.
+2. Answer the user's question as accurately and completely as possible.
+3. Cite the wiki pages you used (by their filename) in your answer.
+4. If any [[wikilinks]] in the context would materially improve your answer but
+   were not provided, list them at the end under "FOLLOW_LINKS:" (one per line).
+5. If the answer cannot be found in the provided pages, say so clearly.
+
+Format your response in clear Markdown with headers where appropriate.
+
+
+---
+
+Question: what information can you help me with?
+
+---
+
+### Wiki Page: Helpdesk AI Features.md
+---
+title: Helpdesk AI Features
+aliases:
+  - "Helpdesk AI Features"
+type: concept
+tags: []
+last_updated: 2024-06-14
+sources: []
+---
+
+## Summary
+Helpdesk AI Features automate case retrieval, self-help suggestions, and resolution summaries for IT and problem-tracking [[Case-Type Discipline]] cases.
+
+## Key Points
+- Includes Get Related Cases, IT Helpdesk Self-Help, and Show Resolution Summary.
+- Provides automated support and resolution documentation for [[Helpdesk AI Features|helpdesk cases]].
+- Suggests self-help options to users.
+
+## Related Concepts
+[[Brava AI Solutions]], [[AI Applications]]
+
+## Source Documents
+- Brava List of AI Solutions 2025-11-14.txt
+
+---
+
+
+---
+
+*Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+
+---
+
+### Wiki Page: Automated AI Triggers.md
+---
+title: Automated AI Triggers
+aliases:
+  - "Automated AI Triggers"
+type: concept
+tags: []
+last_updated: 2026-05-13
+sources: []
+---
+
+## Summary
+Automated AI triggers are mechanisms that activate [[Agentic AI|AI]] functions based on scheduled events or the arrival of new information, enabling systemic, automatic deployment of [[Agentic AI|AI]] within organizational workflows.
+
+## Key Points
+- Automated activation captures more value than human-initiated [[Agentic AI|AI]] tool usage.
+- Scheduled events (e.g., monthly reports) and event-driven triggers (e.g., arrival of [[Invoices]], sales leads) are natural activation points.
+- [[AI Agents]] can analyze, summarize, and augment information automatically, improving workflow outputs without requiring user initiation.
+- This approach delivers benefits systemically, similar to adding fluoride to the water supply.
+
+## Related Concepts
+[[AI Capabilities]], [[Architectural Approach to Enterprise AI]], [[Enterprise AI Rollout]]
+
+## Source Documents
+- 05-13 Meeting_ AI Adoption Pace, Governance, and Rollout Strategy-Technology Insights and Perspectives.docx
+
+---
+
+
+---
+
+*Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+
+---
+
+### Wiki Page: User-Context Data.md
+---
+title: User-Context Data
+aliases:
+  - "User-Context Data"
+type: concept
+tags: []
+last_updated: 2024-06-11
+sources: []
+---
+
+## Summary
+[[User-Context Data]] includes information about the user's environment, role, and current activities, which can be passed to [[AI Model]]s for enhanced relevance.
+
+## Key Points
+- Contextual data includes screen viewed, user role, open [[Task]]s, permissions, and identifying information.
+- Improves [[Agentic AI|AI]] output by providing relevant context.
+- Reduces need for manual data entry.
+
+## Related Concepts
+[[Data Access]], [[AI Training Framework]]
+
+## Source Documents
+- AI Training and Concepts Overview 2025-09-11.docx
+
+---
+
+
+---
+
+*Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+
+---
+
+### Wiki Page: Vectorized Semantic Search.md
+---
+title: Vectorized Semantic Search
+aliases:
+  - "Vectorized Semantic Search"
+type: concept
+tags: []
+last_updated: 2026-04-03
+sources: []
+---
+
+## Summary
+Vectorized Semantic Search is an advanced search capability that indexes large volumes of information and retrieves answers based on semantic meaning rather than keywords.
+
+## Key Points
+- Enables near-instantaneous retrieval of information (e.g., 500 milliseconds for seven million items).
+- Supports complex queries and synthesized answers from indexed conversations.
+- Demonstrated in the "[[Boxer]]" platform.
+
+## Related Concepts
+[[Relay & Boxer]], [[Automated Data Pipelines]], [[Integrated AI Systems]], [[Symbiotic Enterprise]]
+
+## Source Documents
+- 04-03 Meeting_ AI Avatar Interview Agent Integration, Scoring Rubrics, and Workflow Alignment-Technology Insights and Perspectives.txt
+
+---
+
+
+---
+
+*Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+
+---
+
+### Wiki Page: Agent Architecture.md
+---
+title: Agent Architecture
+aliases:
+  - "Agent Architecture"
+type: concept
+tags: []
+last_updated: 2024-06-10
+sources: []
+---
+
+## Summary
+Agent architecture refers to the structured system of specialized agents within a [[Self-Driving Company]], each responsible for converting requests, retrieving data, visualizing information, and executing actions.
+
+## Key Points
+- Includes [[Understanding Agent]]s, [[Search Agent]]s, display and interaction agents, and [[Action Agent]]s.
+- [[Understanding Agent]]s translate conversational queries into technical specifications.
+- [[Search Agent]]s retrieve data from indexed and unstructured sources.
+- Display agents generate dynamic visualizations for immediate review.
+- [[Action Agent]]s trigger workflows, either with [[Human in the Loop]] operations.
+
+## Related Concepts
+[[Self-Driving Company]], [[Domain Expert Agents]], [[Orchestration Agents]], [[Agentic Orchestration]], [[Integrated Systems]]
+
+## Source Documents
+- 02-27 Briefing_ Self-Driving Company Architecture and Global Talent Strategy-Summary.docx
+
+
+---
+
+*Part of the [[_index|FutureSense Knowledge Wiki]]*

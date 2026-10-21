@@ -24,7 +24,10 @@ if PROJECT_ROOT not in sys.path:
 import config
 from src.query import run_query, load_wiki_pages, extract_wikilinks
 from src.update import update_document
-from src.llm_client import _USE_AZURE, _AZURE_DEPLOYMENT, _AZURE_ENDPOINT
+from src.llm_client import (
+    _USE_AZURE, _AZURE_DEPLOYMENT, _AZURE_ENDPOINT,
+    _USE_OPENROUTER, _OPENROUTER_MODEL
+)
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -96,14 +99,20 @@ def get_stats():
         except Exception:
             pass
 
+    active_model = _OPENROUTER_MODEL if _USE_OPENROUTER else (_AZURE_DEPLOYMENT if _USE_AZURE else "None")
+    is_active = _USE_OPENROUTER or _USE_AZURE
+    provider = "OpenRouter" if _USE_OPENROUTER else ("Azure OpenAI" if _USE_AZURE else "offline")
+
     return jsonify({
         "status": "online",
         "total_pages": total_pages,
         "processed_docs": processed_count,
         "page_types": types_count,
-        "azure_active": _USE_AZURE,
-        "azure_deployment": _AZURE_DEPLOYMENT,
-        "azure_endpoint": _AZURE_ENDPOINT.split("/api")[0] if _AZURE_ENDPOINT else "",
+        "azure_active": is_active,
+        "azure_deployment": active_model,
+        "azure_endpoint": "https://openrouter.ai" if _USE_OPENROUTER else (_AZURE_ENDPOINT.split("/api")[0] if _AZURE_ENDPOINT else ""),
+        "llm_provider": provider,
+        "llm_model": active_model,
         "wiki_dir": config.WIKI_DIR,
     })
 

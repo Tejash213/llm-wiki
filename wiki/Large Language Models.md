@@ -1,30 +1,30 @@
 ---
 title: Large Language Models
 aliases:
-  - "Large Language Models"
+  - Large Language Models
 type: concept
 tags: []
-last_updated: 2024-06-10
-sources: []
+last_updated: 2026-05-12
+sources: ["05-12 Commercial Real Estate Operations-Technology Insights and Perspectives.docx"]
 ---
 
 ## Summary
-[[Large Language Models]] (LLMs) are advanced [[AI Model]]s capable of processing and generating human language, supported by [[Brava Systems]] for various organizational tasks.
+Large Language Models (LLMs) are one category of raw AI models referenced as part of a broader set of AI capabilities that feed into agentic and orchestration architectures.
 
 ## Key Points
-- Brava integrates standard LLMs such as [[Microsoft Azure]] and [[Gemini]] for query processing and conversational tasks.
-- [[Large Language Models]] can be used in user-driven, automated, and document-based AI activations.
-- [[Large Language Models]] are part of Brava's flexible model selection for tailored AI solutions.
+- LLMs are used alongside other capabilities (computer vision, predictive analytics) within an orchestration architecture.
+- The orchestration layer feeds processed data into LLMs and interprets outputs for downstream workflow actions.
+- LLM outputs are most valuable when embedded back into automated processes rather than presented solely on-screen.
 
 ## Related Concepts
-[[Brava Systems]], [[AI Integration]], [[AI Agents]], [[Prompt Store]]
+[[AI Agent]], [[Architecture Of Applied Intelligence]], [[Orchestration Layer]], [[Content Understanding]]
 
 ## Source Documents
-- Overview of Brava General Concepts.docx
-
----
-
+- 05-12 Commercial Real Estate Operations-Technology Insights and Perspectives.docx
 
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

@@ -1,30 +1,30 @@
 ---
 title: Insight Navigator
 aliases:
-  - "Insight Navigator"
+  - Insight Navigator
 type: entity
 tags: []
-last_updated: 2024-06-10
+last_updated: 2026-02-25
 sources: []
 ---
 
 ## Summary
-[[Insight Navigator]] is an [[Agentic AI|AI]] component developed by [[Boxer]] that interprets natural language questions and maps them to specific organizational data.
+A trained AI agent that suggests relevant questions and data elements for business scenarios by leveraging historical reports and user queries.
 
 ## Key Points
-- Translates user queries into actionable data requests, e.g., mapping "available units in Phoenix" to relevant property data.
-- Forms part of [[Boxer]]'s foundational [[Agentic AI|AI]] components.
-- Can be used individually or as part of workflows.
+- Uses historical reports and query patterns to recommend investigative questions and required data for specific tasks (e.g., lease reviews).
+- Helps guide users to actionable insights and reduces the cognitive load of data exploration.
+- Can be used to standardize investigative workflows across business functions.
 
 ## Related Concepts
-[[Boxer]], [[Understanding Agent]], [[Action Agent]], [[Foundry]], [[AI Solutions Inventory]]
+[[Demonstration of AI Agents and System Architecture]], [[Understanding Agent]], [[Expert Agents]]
 
 ## Source Documents
-- AI Strategy for Department Heads 2026-03-25.docx
-
----
-
+- Various Content Blocks for AI and FutureSense 2026-02-25.txt
 
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

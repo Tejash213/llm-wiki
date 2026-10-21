@@ -1,31 +1,30 @@
 ---
 title: AI in Real Estate
 aliases:
-  - "AI in Real Estate"
+  - AI in Real Estate
 type: theme
 tags: []
-last_updated: 2024-06-10
-sources: []
+last_updated: 2026-10-13
+sources: ["Boxer AI Show and Tell.docx"]
 ---
 
 ## Summary
-Artificial intelligence is increasingly being integrated into [[AI in Real Estate]] operations, enabling [[Automation]], analytics, and enhanced customer communication.
+AI in real estate refers to applications of artificial intelligence across property management, operations, construction, analytics, content generation, and workflows within vertically integrated real estate businesses like Boxer.
 
 ## Key Points
-- [[Agentic AI|AI]] is used for [[Knowledge Recall]], [[Pattern Recognition]], and workflow [[Automation]] in [[AI in Real Estate]].
-- Applications include document abstraction, [[Predictive Maintenance]], and generative content creation.
-- [[AI Adoption]] is transforming [[AI Hiring]], focusing more on [[Aptitude-Based Hiring]] and adaptability.
-- [[Boxer]] is a leader in implementing [[Agentic AI|AI]] across its [[AI in Real Estate]] functions.
+- AI can automate knowledge recall and pattern recognition tasks historically performed by experienced staff, reducing cost and time for routine decision-making.
+- Use cases include narrative generation for customer communication, action generation from customer requests, vision and speech analysis, predictive analytics, and generative content.
+- Successful adoption requires data infrastructure, workflow automation, organizational capabilities, and workforce hiring focused on aptitude and adaptability.
 
 ## Related Concepts
-[[Boxer]], [[Boxer AI Philosophy]], [[Agentic AI]], [[AI Adoption Roadmap]]
+[[Boxer]], [[Types of Artificial Intelligence]], [[Data and Workflow Automation]], [[Content Understanding]], [[Analytical and Predictive (Machine Learning)]], [[Generative Models]]
 
 ## Source Documents
 - Boxer AI Show and Tell.docx
 
 ---
 
-
----
-
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

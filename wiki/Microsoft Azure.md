@@ -1,29 +1,30 @@
 ---
 title: Microsoft Azure
 aliases:
-  - "Microsoft Azure"
+  - Microsoft Azure
 type: entity
 tags: []
-last_updated: 2024-06-10
-sources: []
+last_updated: 2026-02-25
+sources: ["A New Architecture for the Intelligent Enterprise 2026-02-25.docx"]
 ---
 
 ## Summary
-[[Microsoft Azure]] is a cloud platform used as part of the company's [[Flexible AI Tools|AI toolkit]], providing infrastructure and [[Flexible AI Tools|AI tools]] for enterprise integration.
+Microsoft Azure is referenced as a major cloud provider that the platform can integrate with, and where tools like Azure Data Factory can be used to build data pipelines.
 
 ## Key Points
-- Azure supports [[AI orchestration]], model execution, and workflow automation.
-- Enables scalable and flexible [[AI Applications]].
+- The platform supports clients using Azure via integration patterns such as Azure Data Factory for ingestion and extraction.
+- Microsoft Azure is one of several AI provider ecosystems the orchestration layer can connect to.
+- Integration respects data locality principles and can operate in view-only or migrated modes.
 
 ## Related Concepts
-[[Enterprise AI Platform]], [[Artificial Intelligence Integration]], [[AI Agents]]
+[[Azure Data Factory]], [[AI Orchestration Layer]], [[Vendor-Agnostic Integration]]
 
 ## Source Documents
-- Integrating Artificial Intelligence into Our Company Presentation Transcript 2025-08-04.docx
-
----
-
+- A New Architecture for the Intelligent Enterprise 2026-02-25.docx
 
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

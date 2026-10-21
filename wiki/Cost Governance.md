@@ -1,30 +1,30 @@
 ---
 title: Cost Governance
 aliases:
-  - "Cost Governance"
+  - Cost Governance
 type: concept
 tags: []
-last_updated: 2026-03-06
-sources: []
+last_updated: 2026-02-25
+sources: ["A New Architecture for the Intelligent Enterprise 2026-02-25.docx"]
 ---
 
 ## Summary
-Cost Governance refers to the mechanisms and practices for monitoring, controlling, and attributing resource usage and expenses within multi-agent [[AI Agents]] systems.
+Practices and architectural measures that ensure AI usage remains cost-effective, particularly in token-billed environments by reducing unnecessary compute and optimizing queries.
 
 ## Key Points
-- Central logs and analytics track agent calls, [[Data Access|data access]], and outcomes.
-- Budget and time ceilings are enforced per agent invocation.
-- Costs are attributed by agent, request, and user, with visibility into savings from scoped runs.
+- Involves designing agents and systems to prefer pre-processed indexes and digests.
+- Demonstrated example: a large system served 100k users with only $1k monthly token/compute cost using efficient indexing.
+- Requires organizational awareness and solution-architect guidance to be effective.
 
 ## Related Concepts
-[[Multi-Agent AI Orchestration]], [[General - Coordinator Agent|General/Coordinator Agent]], [[Observability]], [[Transparency]]
+[[Token-Based AI]], [[Pre-Vectorized Indexes]], [[Governance And Cost Management]]
 
 ## Source Documents
-- 03-06 Workshop_ Multi-Agent AI Orchestration, Pseudocode Interface, and Cost Governance-Summary.docx
-
----
-
+- A New Architecture for the Intelligent Enterprise 2026-02-25.docx
 
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

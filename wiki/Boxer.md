@@ -1,31 +1,30 @@
 ---
 title: Boxer
 aliases:
-  - "Boxer"
+  - Boxer
 type: entity
 tags: []
-last_updated: 2024-06-10
-sources: []
+last_updated: 2026-10-13
+sources: ["Boxer AI Show and Tell.docx"]
 ---
 
 ## Summary
-[[Boxer]] is a vertically integrated [[Commercial Real Estate|real estate]] company that is actively adopting [[AI Adoption]] artificial intelligence (AI) technologies across its operations.
+Boxer is a vertically integrated real estate company referenced in the document as the organization running internal AI initiatives and hosting the "Boxer AI Show and Tell." Justin Segal is identified as its president.
 
 ## Key Points
-- [[Boxer]] operates in the [[Commercial Real Estate|real estate]] sector and manages a wide range of business functions internally.
-- The company has a philosophy of hiring flexible, adaptable people open to new systems and technology.
-- [[Boxer]] is ahead in data utilization and system integration compared to typical [[Commercial Real Estate|real estate]] companies.
-- [[AI Applications]] AI is being used in operations, construction, and customer communication.
+- Boxer operates as a vertically integrated business in real estate, performing many related functions internally.
+- The company has been exploring and adopting AI features across teams such as operations and construction.
+- Boxer emphasizes hiring adaptable, system-oriented employees and is positioned ahead on data and systems compared to typical companies.
 
 ## Related Concepts
-[[AI in Real Estate]], [[Boxer AI Philosophy]], [[Justin Segal]], [[Agentic AI]], [[AI Anxiety]], [[AI Adoption Roadmap]]
+[[Vertically Integrated Business]], [[Justin Segal]], [[Boxer AI Show and Tell]], [[AI in Real Estate]], [[Company Culture]], [[Operations Team]], [[Construction Team]], [[Hiring for Aptitude]]
 
 ## Source Documents
 - Boxer AI Show and Tell.docx
 
 ---
 
-
----
-
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

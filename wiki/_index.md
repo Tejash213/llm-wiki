@@ -5,7 +5,7 @@ type: index
 
 # FutureSense Knowledge Wiki
 
-> Auto-generated from FutureSense documents using GPT-4.1.
+> Auto-generated from FutureSense documents using GPT-4.1.  
 > Open this folder in [Obsidian](https://obsidian.md) to explore the knowledge graph.
 
 ---
@@ -33,7 +33,7 @@ type: index
 - [[Fleet Manager]]
 - [[Foundry]]
 - [[Gemini]]
-- [[General - Coordinator Agent|General/Coordinator Agent]]
+- [[General/Coordinator Agent]]
 - [[Insight Agent]]
 - [[Insight Navigator]]
 - [[Internet Research Agents]]
@@ -54,12 +54,12 @@ type: index
 - [[STEMIs Enterprise]]
 - [[Safe LLM Sandbox]]
 - [[Search Agent]]
+- [[SkillOpt]]
 - [[Stemmons Enterprise]]
 - [[Understanding Agent]]
 - [[William]]
 - [[Yardi]]
 - [[Yardi Virtuoso]]
-
 
 ## Concepts
 
@@ -184,7 +184,7 @@ type: index
 - [[Learning and Development]]
 - [[Legal Case AI]]
 - [[Loans]]
-- [[Low-Code - No-Code Platform|Low-Code/No-Code Platform]]
+- [[Low-Code/No-Code Platform]]
 - [[Manual Operations]]
 - [[Marketing Content Generation]]
 - [[Mid-Level Goal]]
@@ -223,6 +223,7 @@ type: index
 - [[Self-Driving Company]]
 - [[Semantic Kernel]]
 - [[Shared Kitchen]]
+- [[Skill Optimization]]
 - [[Socio-Technical Alignment]]
 - [[Stand-Alone Agent]]
 - [[Standards]]
@@ -233,6 +234,7 @@ type: index
 - [[Technological Foundation]]
 - [[Text-to-API]]
 - [[Text-to-U]]
+- [[Textual Learning Rate]]
 - [[Transparency]]
 - [[Transparency and Control]]
 - [[Trigger Taxonomy]]
@@ -243,7 +245,6 @@ type: index
 - [[User-Provided Data]]
 - [[Vectorized Semantic Search]]
 - [[Wiki Generation Skill]]
-
 
 ## Themes
 

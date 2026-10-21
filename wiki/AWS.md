@@ -1,29 +1,30 @@
 ---
 title: AWS
 aliases:
-  - "AWS"
+  - AWS
 type: entity
 tags: []
-last_updated: 2024-06-10
-sources: []
+last_updated: 2026-02-25
+sources: ["A New Architecture for the Intelligent Enterprise 2026-02-25.docx"]
 ---
 
 ## Summary
-AWS (Amazon Web Services) is a cloud platform used in the company's [[Flexible AI Tools|AI toolkit]], providing infrastructure and [[Flexible AI Tools|AI tools]] for [[Enterprise AI Integration]].
+Amazon Web Services (AWS) is listed as one of the AI and cloud providers to which the AI orchestration layer can connect in a vendor-agnostic manner.
 
 ## Key Points
-- AWS supports [[AI Orchestration]], model execution, and workflow automation.
-- Enables scalable and flexible [[AI Applications]].
+- The orchestration layer supports connection to AWS-hosted AI and cloud services alongside other providers.
+- Vendor-agnostic integration allows selecting the best model or service for a specific task.
+- Emphasizes flexibility and avoidance of vendor lock-in.
 
 ## Related Concepts
-[[Enterprise AI Platform]], [[Artificial Intelligence Integration]], [[AI Agents]]
+[[AI Orchestration Layer]], [[Vendor-Agnostic Integration]], [[Microsoft Azure]]
 
 ## Source Documents
-- Integrating Artificial Intelligence into Our Company Presentation Transcript 2025-08-04.docx
-
----
-
+- A New Architecture for the Intelligent Enterprise 2026-02-25.docx
 
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

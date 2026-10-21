@@ -1,30 +1,30 @@
 ---
 title: AI Anxiety
 aliases:
-  - "AI Anxiety"
+  - AI Anxiety
 type: theme
 tags: []
-last_updated: 2024-06-10
-sources: []
+last_updated: 2026-10-13
+sources: ["Boxer AI Show and Tell.docx"]
 ---
 
 ## Summary
-AI anxiety refers to concerns about [[Artificial Intelligence Integration]] replacing jobs or diminishing human value in the workplace.
+AI anxiety refers to concerns that AI will replace human jobs or reduce human value. The document frames this as a familiar pattern from earlier technological shifts and notes Boxer’s workforce is largely adaptable.
 
 ## Key Points
-- Common anxieties include fears of job displacement and loss of relevance due to [[AI Adoption]].
-- [[Boxer]] addresses these concerns by emphasizing technology as a progression and hiring adaptable people.
-- The company culture is designed to minimize resistance to new systems and technologies.
+- Anxiety about AI replacing jobs mirrors historic concerns about computers and other technologies.
+- Most employees adapt to productivity tools; Boxer reports hiring flexible, system-oriented staff which reduces organizational friction.
+- The document suggests focusing on retraining and repositioning roles instead of resisting technological change.
 
 ## Related Concepts
-[[Boxer AI Philosophy]], [[Boxer]], [[AI in Real Estate]]
+[[Company Culture]], [[Hiring for Aptitude]], [[AI Philosophy]], [[Boxer]]
 
 ## Source Documents
 - Boxer AI Show and Tell.docx
 
 ---
 
-
----
-
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

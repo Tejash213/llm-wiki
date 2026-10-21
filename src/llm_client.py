@@ -75,6 +75,70 @@ _AZURE_API_VER    = os.environ.get("AZURE_OPENAI_API_VERSION", "2025-01-01-previ
 
 _USE_AZURE = bool(_AZURE_API_KEY and _AZURE_ENDPOINT)
 
+_OPENROUTER_KEY   = os.environ.get("OPENROUTER_API_KEY", "")
+_OPENROUTER_MODEL = os.environ.get("OPENROUTER_MODEL", "nvidia/nemotron-3.5-super-vl")
+_OPENROUTER_URL   = "https://openrouter.ai/api/v1/chat/completions"
+
+_USE_OPENROUTER = bool(_OPENROUTER_KEY)
+
+
+# -- OpenRouter direct REST call (NVIDIA Nemotron 3.5 Super VL) --
+
+def _call_openrouter(system_prompt, user_prompt, max_tokens=None, temperature=0.3):
+    """
+    Call OpenRouter API using requests.
+    Supports nvidia/nemotron-3.5-super-vl and other OpenRouter models.
+    Caps max_tokens to prevent 402 Payment Required credit limits and disables
+    heavy reasoning effort so responses return quickly and reliably.
+    """
+    default_tokens = getattr(config, "MAX_TOKENS_GENERATE", 4096)
+    effective_tokens = max_tokens if max_tokens is not None else default_tokens
+    if effective_tokens < 64:
+        effective_tokens = 64
+    if effective_tokens > 4096:
+        effective_tokens = 4096
+
+    headers = {
+        "Authorization": f"Bearer {_OPENROUTER_KEY}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://llm-wiki-j43v.onrender.com",
+        "X-Title": "LLM Wiki Knowledge Base",
+    }
+
+    messages = []
+    if system_prompt:
+        messages.append({"role": "system", "content": system_prompt})
+    messages.append({"role": "user", "content": user_prompt})
+
+    body = {
+        "model": _OPENROUTER_MODEL,
+        "messages": messages,
+        "max_tokens": effective_tokens,
+        "temperature": temperature if temperature is not None else 0.3,
+        "reasoning": {"effort": "none"},
+    }
+
+    try:
+        resp = _requests.post(_OPENROUTER_URL, json=body, headers=headers, timeout=120)
+    except _requests.exceptions.Timeout:
+        raise RuntimeError("OpenRouter request timed out (120s)")
+    except _requests.exceptions.ConnectionError as e:
+        raise RuntimeError(f"OpenRouter connection error: {e}")
+
+    if resp.status_code != 200:
+        raise RuntimeError(f"OpenRouter error {resp.status_code}: {resp.text[:400]}")
+
+    data = resp.json()
+    try:
+        choice = data["choices"][0]
+        msg = choice.get("message", {})
+        content = msg.get("content")
+        if not content and msg.get("reasoning"):
+            content = msg.get("reasoning")
+        return content or ""
+    except (KeyError, IndexError) as e:
+        raise RuntimeError(f"Unexpected OpenRouter response shape: {e}\n{data}")
+
 
 # -- Azure OpenAI direct REST call --
 
@@ -187,14 +251,19 @@ def call_llm(system_prompt, user_prompt, max_tokens=None, temperature=None):
     Send a prompt and return the LLM response as a string.
 
     Priority:
-      1. Azure OpenAI  (when .env has AZURE_OPENAI_API_KEY + AZURE_OPENAI_ENDPOINT)
-      2. SkillOpt interactive bridge  (config.SKILLOPT_BACKEND == "interactive")
-      3. Antigravity agentapi fire-and-forget  (legacy)
+      1. OpenRouter (primary when OPENROUTER_API_KEY is present)
+      2. Azure OpenAI (when AZURE_OPENAI_API_KEY + AZURE_OPENAI_ENDPOINT are present)
+      3. SkillOpt interactive bridge (config.SKILLOPT_BACKEND == "interactive")
+      4. Antigravity agentapi fire-and-forget (legacy)
     """
     _max_tokens  = max_tokens  if max_tokens  is not None else config.MAX_TOKENS_GENERATE
     _temperature = temperature if temperature is not None else config.TEMPERATURE
 
-    # 1. Azure OpenAI (primary)
+    # 1. OpenRouter (primary)
+    if _USE_OPENROUTER:
+        return _call_openrouter(system_prompt, user_prompt, _max_tokens, _temperature)
+
+    # 2. Azure OpenAI (secondary)
     if _USE_AZURE:
         return _call_azure(system_prompt, user_prompt, _max_tokens, _temperature)
 

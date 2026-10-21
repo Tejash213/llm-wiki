@@ -1,30 +1,30 @@
 ---
 title: Agent Architecture
 aliases:
-  - "Agent Architecture"
+  - Agent Architecture
 type: concept
 tags: []
-last_updated: 2024-06-10
+last_updated: 2026-02-27
 sources: []
 ---
 
 ## Summary
-Agent architecture refers to the structured system of specialized agents within a [[Self-Driving Company]], each responsible for converting requests, retrieving data, visualizing information, and executing actions.
+Agent Architecture describes a layered set of specialized agents—understanding, search, display/interaction, and action/execution—designed to translate intent into precise retrieval, visualization, and operational outcomes.
 
 ## Key Points
-- Includes [[Understanding Agent]]s, [[Search Agent]]s, display and interaction agents, and [[Action Agent]]s.
-- [[Understanding Agent]]s translate conversational queries into technical specifications.
-- [[Search Agent]]s retrieve data from indexed and unstructured sources.
-- Display agents generate dynamic visualizations for immediate review.
-- [[Action Agent]]s trigger workflows, either with [[Human in the Loop]] operations.
+- Comprised of distinct agent types: Understanding Agent, Search Agent, Display and Interaction, and Action and Execution.
+- Supports integration with domain expert agents and planner-executor orchestration for complex, multi-step work.
+- Enables conversion of conversational requests into structured queries, retrieval from semantically indexed stores, dynamic visualization, and operational triggers.
 
 ## Related Concepts
-[[Self-Driving Company]], [[Domain Expert Agents]], [[Orchestration Agents]], [[Agentic Orchestration]], [[Integrated Systems]]
+[[Understanding Agent]], [[Search Agent]], [[Display and Interaction]], [[Action and Execution]], [[Orchestration Agents]], [[Domain Expert Agents]]
 
 ## Source Documents
 - 02-27 Briefing_ Self-Driving Company Architecture and Global Talent Strategy-Summary.docx
 
-
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

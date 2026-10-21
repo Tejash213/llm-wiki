@@ -1,29 +1,30 @@
 ---
 title: Yardi
 aliases:
-  - "Yardi"
+  - Yardi
 type: entity
 tags: []
-last_updated: 2024-06-10
-sources: []
+last_updated: 2026-05-12
+sources: ["05-12 Commercial Real Estate Operations-Technology Insights and Perspectives.docx"]
 ---
 
 ## Summary
-Yardi is a data source integrated into the company's [[Unified Data and Systems]] infrastructure, supporting data-driven decision-making.
+Yardi is presented as a core accounting/system-of-record platform whose structured financial data serves as a key metadata source for operational platforms.
 
 ## Key Points
-- Yardi data is consolidated with other sources for enterprise taxonomy.
-- Enables seamless access and brokering of information.
+- Yardi is described as a sacrosanct, GAAP-compliant core accounting engine used as a system of record.
+- Property codes and other Yardi metadata function as connective tissue linking projects, leases, contracts, work orders, and tenant information.
+- Integration with Yardi focuses on connecting and mastering its data rather than replacing the platform for accounting functions.
 
 ## Related Concepts
-[[Unified Data and Systems]], [[Artificial Intelligence Integration]]
+[[Data Mastery]], [[Platform Connectivity]], [[Property Code]], [[System Of Record]]
 
 ## Source Documents
-- Integrating Artificial Intelligence into Our Company Presentation Transcript 2025-08-04.docx
-
----
-
+- 05-12 Commercial Real Estate Operations-Technology Insights and Perspectives.docx
 
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

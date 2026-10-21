@@ -1,30 +1,30 @@
 ---
 title: Artificial General Intelligence
 aliases:
-  - "Artificial General Intelligence"
-type: concept
+  - Artificial General Intelligence
+type: theme
 tags: []
-last_updated: 2026-04-16
-sources: []
+last_updated: 2026-02-25
+sources: ["A New Architecture for the Intelligent Enterprise 2026-02-25.docx"]
 ---
 
 ## Summary
-Artificial General Intelligence (AGI) refers to [[AI Capabilities]] capable of performing a wide range of tasks, similar to the all-knowing computer in Star Trek, with potential applications in industries like [[AI in Real Estate]].
+The document suggests that on-the-fly mapping and autonomous agent configuration enabled by an Understanding Agent represent a step toward AGI-like capabilities within the enterprise context.
 
 ## Key Points
-- AGI is envisioned as broadly capable AI, not limited to narrow tasks.
-- Achieving AGI requires building infrastructure and connecting systems.
-- The "Star Trek computer" analogy helps communicate AGI's potential.
+- Dynamic interrogation and automatic mapping of new data sources reduces the need for manual developer intervention.
+- The capability for systems to understand their own structure and autonomously integrate data is framed as a trajectory toward AGI in enterprises.
+- Emphasizes practical, constrained AGI-like features delivered through architecture rather than general research milestones.
 
 ## Related Concepts
-[[Technological Foundation]], [[Data Pipelines]]
+[[Understanding Agent]], [[Swarms Of Agents]], [[Agentic Ecosystem]]
 
 ## Source Documents
-- Comments about AI and Technology Adoption 2026-04-16.txt
-
----
-
+- A New Architecture for the Intelligent Enterprise 2026-02-25.docx
 
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

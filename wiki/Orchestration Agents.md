@@ -1,31 +1,30 @@
 ---
 title: Orchestration Agents
 aliases:
-  - "Orchestration Agents"
+  - Orchestration Agents
 type: concept
 tags: []
-last_updated: 2024-06-10
+last_updated: 2026-02-27
 sources: []
 ---
 
 ## Summary
-[[Orchestration Agents]] are specialized agents responsible for planning and executing complex, multi-step workflows that require memory, iteration, and backtracking in a [[Self-Driving Company]].
+Orchestration Agents coordinate multi-step work that requires memory, iteration, backtracking, and complex planning, often realized as planner and executor agent pairs.
 
 ## Key Points
-- Includes planner and executor roles for chunking work and managing memory across steps.
-- Handles derivative decisions, re-planning, and coordination for large-scale tasks.
-- Analogies range from simple requests to event planning (e.g., wedding catering).
-- Enables both small and large [[AI Use Cases]], from profiling leases to migrating thousands of documents.
+- Necessary when tasks exceed single-shot operations and require chunking, memory, and iterative re-planning.
+- Manage memory across steps, handle derivative decisions, and support backtracking within context limits.
+- Service-level analogies illustrate differing complexity—from simple waiter-style memory to full event planning requiring both planning and execution agents.
 
 ## Related Concepts
-[[Agent Architecture]], [[Self-Driving Company]], [[Integrated Systems]], [[Agentic Orchestration]]
+[[Planner and Executor]], [[Planner and Executor]], [[Agent Architecture]], [[Action and Execution]]
 
 ## Source Documents
 - 02-27 Briefing_ Self-Driving Company Architecture and Global Talent Strategy-Summary.docx
 
 ---
 
-
----
-
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->

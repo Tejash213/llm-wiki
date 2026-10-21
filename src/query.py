@@ -220,7 +220,7 @@ def is_off_topic(query: str, pages: dict[str, str]) -> bool:
         verdict = call_llm_query(
             system,
             f"User question: {query}",
-            max_tokens=5,
+            max_tokens=64,
         ).strip().upper()
         return verdict.startswith("IRRELEVANT")
     except Exception:

@@ -1,30 +1,30 @@
 ---
 title: Expert Agents
 aliases:
-  - "Expert Agents"
+  - Expert Agents
 type: entity
 tags: []
-last_updated: 2026-03-06
+last_updated: 2026-02-25
 sources: []
 ---
 
 ## Summary
-[[Expert Agents]] are specialized [[AI Agents]] seeded with domain-specific knowledge, [[Standards]], and corpora, providing targeted reasoning and judgment within orchestrated flows.
+Specialized AI agents trained for specific business functions that leverage static knowledge sources like standards, checklists, and job descriptions.
 
 ## Key Points
-- Plug into [[Orchestration Layer]] for domain-appropriate decision steps.
-- Ingest [[Job Descriptions]], policies, and case corpora.
-- Augment the generic [[AI Deployment Pipeline]] with specialty reasoning.
+- Domain-specialized (e.g., property management, construction) to provide expert guidance within functional contexts.
+- Leverage static corpora (standards, checklists) and operational data for consistent recommendations.
+- Complement general-purpose agents by providing business-specific rules and workflows.
 
 ## Related Concepts
-[[Multi-Agent AI Orchestration]], [[General - Coordinator Agent|General/Coordinator Agent]], [[Agentic System Design]]
+[[Demonstration of AI Agents and System Architecture]], [[Insight Navigator]], [[Planning and Orchestration Agents]]
 
 ## Source Documents
-- 03-06 Workshop_ Multi-Agent AI Orchestration, Pseudocode Interface, and Cost Governance-Summary.docx
-
----
-
+- Various Content Blocks for AI and FutureSense 2026-02-25.txt
 
 ---
 
 *Part of the [[_index|FutureSense Knowledge Wiki]]*
+
+<!-- SLOW_UPDATE -->
+<!-- /SLOW_UPDATE -->
